@@ -1,0 +1,5 @@
+# Roblox editor backup and temporary files
+*.rbxl.lock
+*.rbxlx.lock
+.DS_Store
+Thumbs.db
