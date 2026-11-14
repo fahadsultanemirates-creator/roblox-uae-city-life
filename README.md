@@ -32,3 +32,22 @@ The build script replaces only the existing generated `UAE_City_Life` workspace 
 The emergency vehicles are **rough block-model prototypes**, not exact copies of the photo references. Arcade movement, multiplayer, performance, and permissions must be tested. Mobile support and detailed buildings are later tasks.
 
 Never put Roblox passwords, verification codes, session cookies, access tokens, or other secrets in this public repository. GitHub and Roblox are different platforms: **pushing to GitHub does not publish your Roblox game**.
+
+
+## Phase 2 graphics upgrade — available now (separate script)
+
+**Keep your local v1 .rbxl backup.** The Phase 2 code is a non-destructive enhancement for the city you already generated, not a newly published Roblox game.
+
+1. Open your saved `Roblox_UAE_City_Life_v1.rbxl` file in **Roblox Studio**.
+2. If you're testing in Play mode, press **Stop**. Stay in **Edit** mode.
+3. Open [build/Upgrade_UAE_City_Life_Phase2.luau](build/Upgrade_UAE_City_Life_Phase2.luau) on GitHub. Press **Raw**, then Ctrl+A and Ctrl+C.
+4. In Studio, focus the **Command Bar**, paste the Phase 2 script, then press Ctrl+Enter to execute (or the execution shortcut configured in your Studio).
+5. Check for `Workspace > UAE_City_Life > Phase2_GulfStyle` in Explorer. Zoom out to find the new waterfront and airport district.
+6. **Save to File As** `Roblox_UAE_City_Life_v2.rbxl`, then click Play to test.
+7. Enter the fire truck with **E**. It should now use a wider third-person camera. Try **W/A/S/D**. Leave the vehicle to restore the normal player camera.
+
+**What is new:** golden-hour colors and atmospheric lighting, Dubai Marina waterfront, airport and runway, bridge, modern glass-fronted towers, family park, streetlights, reduced billboard clutter, and an experimental third-person camera. These are **stylized Roblox Part models**, not yet production-quality 3D assets.
+
+**What remains to do:** verify the camera and drive controls in Roblox Studio, implement physical wheel behavior and accurate vehicle bodies, refine landmark meshes, improve geographic routing and city traffic, add mobile controls and multiplayer tests. We have not imported the actual meshes or textures from the separate *Gulf Afterglow* game; only its available design brief inspired the lighting and marina direction.
+
+If you run the upgrade a second time, its `Phase2_GulfStyle` folder and `UAE_VehicleCamera` script are replaced, but the original `UAE_City_Life` city and its four UAE flags are preserved.
