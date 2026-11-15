@@ -69,3 +69,16 @@ Start from the saved **v2** Roblox place; don't run the Phase 1 or Phase 2 scrip
 8. The first mission is a **UAE Explorer** visit to Dubai, Sharjah and Ajman; it is client-side, experimental and does not save progress. More developed emergency-service missions are future work.
 
 This is a **new prototype upgrade, not yet playtested in Roblox Studio**. The map is a schematic map of game areas, not a real UAE street map. Cars and NPCs are simple automated visual models; vehicle physics, navigation and pedestrian animation still need improvement. The Gulf Afterglow comparison used a saved *text design brief* only, not actual meshes or graphics files. View [docs/PHASE3_DEVELOPMENT_PLAN.md](docs/PHASE3_DEVELOPMENT_PLAN.md) for the whole roadmap.
+
+
+## NEW: Phase 4 Mega City beta (November 2026)
+
+**Latest major upgrade:** [`build/Upgrade_UAE_City_Life_Phase4_MegaCity.luau`](build/Upgrade_UAE_City_Life_Phase4_MegaCity.luau)
+
+**Start from your previously saved Phase 2 or Phase 3A Roblox Studio place, not an empty Baseplate.** Press **Stop** before executing. On GitHub select **Raw → Ctrl+A → Ctrl+C**, paste into the Studio **Command Bar** with Ctrl+V, run with Ctrl+Enter, then save **as a NEW file** `Roblox_UAE_City_Life_v4.rbxl`.
+
+**What's new:** 3,300 × 3,100 stud map, three two-lane road rings, eight new urban clusters, 50+ lane-based traffic cars (no crossing routes), up to 15 R15 residents, circular top-left minimap, actual Dubai GST clock, 40-minute in-game day/night cycle, richer road lighting, rebuilt yellow Civil Defence truck and blue/white ambulance based on the supplied reference pictures, white Arabic police lettering **الشرطة** on dark green doors, and improved third-person vehicle camera. Preserves all seven original districts, 4 UAE flags and avatar choice.
+
+**Quality note:** These are procedural Roblox Parts, not exact photo-accurate imported 3D meshes; traffic does not yet have car-to-car collision physics, junction AI or full NPC walking animations; missions remain an early exploration prototype. The source is **uploaded but not yet run or verified in Studio**. For older Dell laptops, edit the script near the top to set `local PERFORMANCE_MODE=true` before executing. Save backups.
+
+See [complete Phase 4 release notes and playtest checklist](docs/PHASE4_MEGA_CITY_RELEASE.md). Do not publish this as a finished product until you have tested it and fixed any runtime errors.
