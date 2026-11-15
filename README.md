@@ -99,3 +99,22 @@ A larger **optional upgrade** is now available on GitHub. Start from the **saved
 These are **code-generated Roblox Parts and scripted scenery**, not photorealistic GTA-quality meshes. Transit is primarily decorative and cars still lack full traffic AI. **Not yet tested in Roblox Studio or published.** The original Gulf project's text brief inspired layout and lighting, but no other game's source/assets were copied.
 
 See [the v5 feature list, shortcuts, limitations and complete test checklist](docs/PHASE5_DUBAI_MODERN_RELEASE.md).
+
+
+## v5.1 update — camera zoom fix + Brookhaven-style roleplay starter
+
+**New incremental hotfix:** [**Patch UAE City Life v5.1 — Zoom and Homes**](build/Patch_UAE_City_Life_v5_1_ZoomAndHomes.luau).
+
+The player reported that v5 zoom did not work as intended. In v5, the +/- buttons only affected the minimap, while the custom camera lacked dedicated on-screen controls outside driving. In **v5.1** there are distinct:
+- **Left +/-:** zooms the small minimap, with a visible changing scale
+- **Right +/-:** zooms the **actual third-person world camera while walking or driving**
+- **Right ↑/↓, PageUp/PageDown, right-drag:** changes viewing angle
+- **Map click / M:** shows or hides the full city map
+
+v5.1 also adds **four claimable UAE villas**, owner signs, openable/lockable doors, beds, furnishings and decorative carports. Property claims are **not persistent** yet. This is **original UAE City Life roleplay functionality**, not copied Brookhaven maps/assets or code.
+
+**Install only after Version 5**, not on an empty Baseplate or on v4. In Roblox Studio **stop Play**, back up your v5 place, open the patch link, click **Raw** and copy all the script, paste into **Command Bar** and run with **Ctrl+Enter**. Save as a new `UAE_City_Life_v5_1.rbxl`, then press Play.
+
+For details and test checklist: [docs/PHASE5_1_ZOOM_AND_HOMES.md](docs/PHASE5_1_ZOOM_AND_HOMES.md).
+
+**Status:** Source uploaded and checked, but still requires a Roblox Studio Play test. It is not published to Roblox.
