@@ -235,6 +235,42 @@ decoText(museumName,"متحف المستقبل  |  MUSEUM OF THE FUTURE",
  Enum.NormalId.Front,C.gold,42)
 billboard(museum,"MUSEUM OF THE FUTURE",Vector3.new(mx,160,mz))
 
+-- Additional recognizable Dubai sights, built from stylized original parts.
+local frameArea=folder(root,"DubaiFrameLandmark")
+local frameX,frameZ=-770,-830
+p(frameArea,"Dubai Frame landscaped square",Vector3.new(166,1.4,148),
+ CFrame.new(frameX,.9,frameZ),C.warm,Enum.Material.Concrete,true)
+for _,side in ipairs({-1,1}) do
+ p(frameArea,"Gold Dubai Frame upright",Vector3.new(13,160,13),
+ CFrame.new(frameX+side*53,80,frameZ),C.gold,Enum.Material.Metal,true)
+ for y=12,155,19 do
+  p(frameArea,"Architectural gold detail",Vector3.new(14,.8,13.5),
+   CFrame.new(frameX+side*53,y,frameZ),RGB(231,208,141),Enum.Material.Metal,false)
+ end
+end
+p(frameArea,"Dubai Frame roof skybridge",Vector3.new(119,15,15),
+ CFrame.new(frameX,161,frameZ),C.gold,Enum.Material.Metal,true)
+billboard(frameArea,"DUBAI FRAME",Vector3.new(frameX,190,frameZ))
+
+local sailArea=folder(root,"BurjAlArabHotel")
+local sailX,sailZ=1125,-940
+p(sailArea,"Private Burj Al Arab island",Vector3.new(145,3,140),
+ CFrame.new(sailX,1,sailZ),C.warm,Enum.Material.Concrete,true)
+p(sailArea,"Burj Al Arab supporting mast",Vector3.new(7,208,7),
+ CFrame.new(sailX-46,105,sailZ),C.grey,Enum.Material.Metal,true)
+for i=1,12 do
+ local y=i*16
+ local width=math.max(22,94-i*6)
+ p(sailArea,"Burj Al Arab curved white sail tier",Vector3.new(width,16,18),
+  CFrame.new(sailX-35+width/2,y+6,sailZ),C.white,Enum.Material.SmoothPlastic,true)
+ p(sailArea,"Sail facade blue glass",Vector3.new(width*.78,9,1),
+  CFrame.new(sailX-31+width/2,y+8,sailZ+9.4),C.glass,Enum.Material.Glass,false)
+end
+p(sailArea,"Sky helipad circle",Vector3.new(2.5,48,48),
+ CFrame.new(sailX+2,185,sailZ+15)*CFrame.Angles(0,0,math.pi/2),
+ C.gold,Enum.Material.Metal,false).Shape=Enum.PartType.Cylinder
+billboard(sailArea,"BURJ AL ARAB • HOTEL",Vector3.new(sailX,245,sailZ))
+
 -- Buildings where services, hotels and shops can be recognized from the street.
 local civic=folder(root,"DubaiShopsHotelsMall")
 local function business(name,x,z,w,d,h,material)
