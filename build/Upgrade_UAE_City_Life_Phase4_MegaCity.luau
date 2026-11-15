@@ -3,6 +3,8 @@
 -- Works after v2 or v3A. Creates a NEW Phase4_MegaCity folder; keeps 4 UAE flags.
 -- 40+ route-locked civilian cars, R15 citizens, Dubai clock, 40-minute day/night.
 -- Yellow Dubai Civil Defence truck and blue/white Dubai ambulance approximate supplied photos.
+-- Change to true before running if your Dell laptop becomes slow.
+local PERFORMANCE_MODE=false
 local W=game:GetService("Workspace")
 local L=game:GetService("Lighting")
 local SS=game:GetService("ServerScriptService")
@@ -23,6 +25,7 @@ if v4old then v4old:Destroy() end
 local root=Instance.new("Folder")
 root.Name="Phase4_MegaCity"
 root.Parent=world
+root:SetAttribute("PerformanceMode",PERFORMANCE_MODE)
 local function color(r,g,b) return Color3.fromRGB(r,g,b) end
 local C={
  white=color(249,247,238),black=color(34,38,43),silver=color(142,155,160),
@@ -159,11 +162,11 @@ end
 local districts=group(root,"ExpandedUrbanDistricts")
 local rng=Random.new(20261115)
 local zones={
- {"Dubai Business", -640,-445, 5,4},
+ {"Dubai Business", -895,-430, 5,4},
  {"Sharjah Community", 500,-510,5,4},
  {"Marina Residences", 520,-720,4,3},
  {"Abu Dhabi North", -740,-120,5,4},
- {"Central Offices", 470,180,5,4},
+ {"Central Offices", 610,180,5,4},
  {"Western Homes", -760,415,4,3},
  {"Northeast Tower Mile", 600,465,5,4},
  {"Fujairah Road", -730,770,4,3},
@@ -197,7 +200,9 @@ for _,area in ipairs(zones) do
    if n%7==0 then h=math.floor(h*1.38) end
    local w=rng:NextInteger(32,44)
    local d=rng:NextInteger(28,44)
-   highrise(f,x,z,w,h,d,n)
+   if not PERFORMANCE_MODE or n%2==1 then
+    highrise(f,x,z,w,h,d,n)
+   end
   end
  end
 end
@@ -486,9 +491,10 @@ for _,spec in ipairs(laneSpec) do
  local points=loop(spec.hw,spec.hh,spec.cz)
  local dist=0
  for j=1,#points do dist=dist+(points[j%#points+1]-points[j]).Magnitude end
- for k=1,spec.n do
+ local laneCount=PERFORMANCE_MODE and math.max(4,math.floor(spec.n*.53)) or spec.n
+ for k=1,laneCount do
   count=count+1
-  local position=dist*(k-1)/spec.n
+  local position=dist*(k-1)/laneCount
   local trafficCar=makeTraffic(count,spec.id,position,spec.speed)
   trafficCar:PivotTo(previewPose(spec,position))
  end
@@ -1000,7 +1006,8 @@ local locations={
 local npcFolder=Instance.new("Folder")
 npcFolder.Name="R15WalkingCitizens"
 npcFolder.Parent=root
-for i=1,15 do
+local npcCount=root:GetAttribute("PerformanceMode") and 7 or 15
+for i=1,npcCount do
  task.spawn(function()
   local description=Instance.new("HumanoidDescription")
   local skin=skinColors[(i-1)%#skinColors+1]
@@ -1055,4 +1062,4 @@ end
 
 ]========])
 
-print("UAE CITY LIFE PHASE 4: 52 lane-locked civilian vehicles, expanded city, updated police/ambulance/fire truck, circular minimap, GST clock, 15 R15 citizens (Play) and day/night cycle.")
+print("UAE CITY LIFE PHASE 4: expanded city, three rebuilt emergency vehicles, "..count.." routed cars, minimap, GST clock, R15 people and day/night cycle. Performance mode: "..tostring(PERFORMANCE_MODE))
