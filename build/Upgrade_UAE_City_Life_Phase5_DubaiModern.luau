@@ -842,6 +842,8 @@ local destinations={
  {name="Dubai International Airport",abbr="DXB",x=-1070,z=-1260},
  {name="Dubai Marina",abbr="MAR",x=1060,z=-1285},
  {name="Metro Station",abbr="M",x=185,z=-1210},
+ {name="Dubai Frame",abbr="DF",x=-770,z=-830},
+ {name="Burj Al Arab",abbr="BA",x=1125,z=-940},
  {name="Sharjah Heritage",abbr="SHJ",x=390,z=-380},
  {name="Ajman Beach",abbr="AJM",x=390,z=210},
 }
@@ -1112,6 +1114,20 @@ local RunService=game:GetService("RunService")
 local world=workspace:WaitForChild("UAE_City_Life")
 local root=world:WaitForChild("Phase5_DubaiModern")
 local motion=root:WaitForChild("AnimatedTransit")
+local RS=game:GetService("ReplicatedStorage")
+-- Phase 4 drives the clock. Extend night-light behaviour to newly generated V5 streets.
+task.spawn(function()
+ while root.Parent do
+  local h=RS:GetAttribute("UAECycleHour")
+  local night=typeof(h)=="number" and (h>=18 or h<6)
+  for _,item in ipairs(root:GetDescendants()) do
+   if item:IsA("PointLight") and item.Name=="CityNightLamp" then
+    item.Enabled=night
+   end
+  end
+  task.wait(5)
+ end
+end)
 local registry={}
 for _,m in ipairs(motion:GetChildren()) do
  if m:IsA("Model") and m.PrimaryPart then
