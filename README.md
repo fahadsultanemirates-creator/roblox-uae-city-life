@@ -82,3 +82,20 @@ This is a **new prototype upgrade, not yet playtested in Roblox Studio**. The ma
 **Quality note:** These are procedural Roblox Parts, not exact photo-accurate imported 3D meshes; traffic does not yet have car-to-car collision physics, junction AI or full NPC walking animations; missions remain an early exploration prototype. The source is **uploaded but not yet run or verified in Studio**. For older Dell laptops, edit the script near the top to set `local PERFORMANCE_MODE=true` before executing. Save backups.
 
 See [complete Phase 4 release notes and playtest checklist](docs/PHASE4_MEGA_CITY_RELEASE.md). Do not publish this as a finished product until you have tested it and fixed any runtime errors.
+
+
+## NEW — Version 5 Dubai Modern City (development build, November 2026)
+
+A larger **optional upgrade** is now available on GitHub. Start from the **saved v4** Roblox Studio project: it preserves the earlier emirates, three emergency vehicles and four UAE flags.
+
+**Choose ONE installer:**
+- [**v5 Lite (recommended for older Dell laptops)**](build/Upgrade_UAE_City_Life_Phase5_DubaiModern_LITE.luau)
+- [v5 Full visual detail](build/Upgrade_UAE_City_Life_Phase5_DubaiModern.luau)
+
+**Install:** Open your v4 place → File → **Save to File As** to create a backup → click **Stop** → open the chosen GitHub installer and click **Raw** → **Ctrl+A / Ctrl+C** → in Roblox Studio's Command Bar **Ctrl+A / Ctrl+V**, then **Ctrl+Enter** → verify `Workspace > UAE_City_Life > Phase5_DubaiModern` → save a **new** `Roblox_UAE_City_Life_v5.rbxl` → test with **Play**.
+
+**Features:** smaller circular radar with zoom/full-map controls and up to 3 destination pins; compact Dubai GST clock; vehicle camera tilt/orbit/zoom; repaired emergency and civilian tyre axes and smaller fire truck door artwork; stylized Sheikh Zayed Road corridor, modern towers, museum oval, Dubai Frame, Burj Al Arab-inspired hotel, airport with white/red aircraft, elevated metro, yacht, cruise ship and sightseeing helicopter; more Roblox R15 citizens; four starter civic missions.
+
+These are **code-generated Roblox Parts and scripted scenery**, not photorealistic GTA-quality meshes. Transit is primarily decorative and cars still lack full traffic AI. **Not yet tested in Roblox Studio or published.** The original Gulf project's text brief inspired layout and lighting, but no other game's source/assets were copied.
+
+See [the v5 feature list, shortcuts, limitations and complete test checklist](docs/PHASE5_DUBAI_MODERN_RELEASE.md).
