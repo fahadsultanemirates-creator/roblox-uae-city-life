@@ -51,3 +51,21 @@ Never put Roblox passwords, verification codes, session cookies, access tokens, 
 **What remains to do:** verify the camera and drive controls in Roblox Studio, implement physical wheel behavior and accurate vehicle bodies, refine landmark meshes, improve geographic routing and city traffic, add mobile controls and multiplayer tests. We have not imported the actual meshes or textures from the separate *Gulf Afterglow* game; only its available design brief inspired the lighting and marina direction.
 
 If you run the upgrade a second time, its `Phase2_GulfStyle` folder and `UAE_VehicleCamera` script are replaced, but the original `UAE_City_Life` city and its four UAE flags are preserved.
+
+
+## Phase 3A — Three-part improvement plan (November 2026)
+
+The next build follows the prioritized plan: **(1) better Gulf-inspired visuals and top-left minimap**, **(2) detailed living city with cars and Arabic vehicle names**, **(3) missions**.
+
+Start from the saved **v2** Roblox place; don't run the Phase 1 or Phase 2 scripts again.
+
+1. Click **Stop** if in Play mode.
+2. Open [build/Upgrade_UAE_City_Life_Phase3A.luau](build/Upgrade_UAE_City_Life_Phase3A.luau) on GitHub. Click **Raw**, then press Ctrl+A and Ctrl+C.
+3. In Studio's **Command Bar**, Ctrl+A to replace the previous command, Ctrl+V to paste this script, then **Ctrl+Enter**.
+4. Check Explorer: `Workspace > UAE_City_Life > Phase3_LivingCity`.
+5. Use **Save to File As** to save `Roblox_UAE_City_Life_v3A.rbxl` (keep v2 backup).
+6. Click Play: see the **live top-left seven-emirates schematic map**, six moving traffic vehicles, four simple pedestrian models, shops and street details. Press **M** to collapse/expand the map.
+7. Inspect the **green-and-white police SUV doors**: the dark green panels should now read **الشرطة in white Arabic lettering**. The ambulance and yellow Civil Defence fire truck also get Arabic text.
+8. The first mission is a **UAE Explorer** visit to Dubai, Sharjah and Ajman; it is client-side, experimental and does not save progress. More developed emergency-service missions are future work.
+
+This is a **new prototype upgrade, not yet playtested in Roblox Studio**. The map is a schematic map of game areas, not a real UAE street map. Cars and NPCs are simple automated visual models; vehicle physics, navigation and pedestrian animation still need improvement. The Gulf Afterglow comparison used a saved *text design brief* only, not actual meshes or graphics files. View [docs/PHASE3_DEVELOPMENT_PLAN.md](docs/PHASE3_DEVELOPMENT_PLAN.md) for the whole roadmap.
