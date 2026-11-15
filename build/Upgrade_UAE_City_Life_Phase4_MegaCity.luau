@@ -1033,7 +1033,11 @@ for i=1,15 do
   hum.DisplayDistanceType=Enum.HumanoidDisplayDistanceType.None
   -- Citizens don't push players or interfere with emergency vehicles.
   for _,p in ipairs(rig:GetDescendants()) do
-   if p:IsA("BasePart") then p.CanCollide=false end
+   if p:IsA("BasePart") then
+    -- Root collision keeps R15 humanoids supported by ground.
+    -- Limbs are noncollidable so they do not snag on street props.
+    p.CanCollide=(p.Name=="HumanoidRootPart")
+   end
   end
   -- A hidden non-colliding root still moves through MoveTo; no teleporting across roads.
   while rig.Parent and root.Parent and hum.Health>0 do
