@@ -124,7 +124,8 @@ local locations={
 local npcFolder=Instance.new("Folder")
 npcFolder.Name="R15WalkingCitizens"
 npcFolder.Parent=root
-for i=1,15 do
+local npcCount=root:GetAttribute("PerformanceMode") and 7 or 15
+for i=1,npcCount do
  task.spawn(function()
   local description=Instance.new("HumanoidDescription")
   local skin=skinColors[(i-1)%#skinColors+1]
