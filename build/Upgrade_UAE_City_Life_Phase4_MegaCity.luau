@@ -464,6 +464,22 @@ local laneSpec={
  {id="O1",hw=1032,hh=942,cz=0,n=8,speed=25},
  {id="O2",hw=1047,hh=957,cz=0,n=8,speed=25},
 }
+-- Place vehicles on real road lanes immediately in Edit mode, not piled up at origin.
+local function previewPose(spec,progress)
+ local points=loop(spec.hw,spec.hh,spec.cz)
+ local d=progress
+ for i=1,#points do
+  local a,b=points[i],points[i%#points+1]
+  local len=(b-a).Magnitude
+  if d<=len then
+   local pos=a:Lerp(b,math.clamp(d/len,0,1))
+   return CFrame.lookAt(pos,pos+(b-a).Unit)
+  end
+  d=d-len
+ end
+ local a,b=points[1],points[2]
+ return CFrame.lookAt(a,b)
+end
 local count=0
 for _,spec in ipairs(laneSpec) do
  local points=loop(spec.hw,spec.hh,spec.cz)
@@ -471,7 +487,9 @@ for _,spec in ipairs(laneSpec) do
  for j=1,#points do dist=dist+(points[j%#points+1]-points[j]).Magnitude end
  for k=1,spec.n do
   count=count+1
-  makeTraffic(count,spec.id,dist*(k-1)/spec.n,spec.speed)
+  local position=dist*(k-1)/spec.n
+  local trafficCar=makeTraffic(count,spec.id,position,spec.speed)
+  trafficCar:PivotTo(previewPose(spec,position))
  end
 end
 
@@ -485,6 +503,15 @@ for _,p in ipairs({
  local anchor=part(sidewalks,"Walking target",Vector3.new(.6,.6,.6),
   CFrame.new(p[1],1,p[2]),C.white,nil,false)
  anchor.Transparency=1
+end
+
+-- Keep the original signs readable but reduce their former billboard clutter.
+for _,gui in ipairs(world:GetDescendants()) do
+ if gui:IsA("BillboardGui") and gui.Name=="LocationSign" then
+  local width=gui.Size.X.Offset
+  gui.Size=UDim2.fromOffset(math.min(width,175),39)
+  gui.MaxDistance=145
+ end
 end
 
 -- Light cinematic grade and more transparent glass while keeping Dell-laptop performance.
