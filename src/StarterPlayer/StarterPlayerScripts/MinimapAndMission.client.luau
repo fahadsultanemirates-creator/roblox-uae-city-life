@@ -155,7 +155,7 @@ local targets={
 }
 local current=1
 local hidden=false
-toggle.MouseButton1Click:Connect(function()
+local function toggleMap()
  hidden=not hidden
  map.Visible=not hidden
  panel.Size=hidden and UDim2.fromOffset(270,39) or UDim2.fromOffset(270,264)
@@ -163,10 +163,11 @@ toggle.MouseButton1Click:Connect(function()
  for _,child in ipairs(panel:GetChildren()) do
   if child:IsA("TextLabel") and child.Text:find("YOU") then child.Visible=not hidden end
  end
-end)
+end
+toggle.MouseButton1Click:Connect(toggleMap)
 UserInputService.InputBegan:Connect(function(input,processed)
  if not processed and input.KeyCode==Enum.KeyCode.M then
-  toggle:Activate()
+  toggleMap()
  end
 end)
 task.spawn(function()
