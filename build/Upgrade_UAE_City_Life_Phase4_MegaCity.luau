@@ -256,7 +256,8 @@ local function rebuild(modelName,kind)
  local base=m:GetPivot()
  -- Repeated builds use prior root; avoid compounding rotation or position.
  local pos=base.Position
- base=CFrame.new(pos)
+ -- Phase 1 used a chassis at Y=3.4 as PrimaryPart; reset our new root to road height.
+ base=CFrame.new(pos.X,0,pos.Z)
  m.PrimaryPart=nil
  for _,child in ipairs(m:GetChildren()) do
   if child:IsA("BasePart") and child~=seat then child:Destroy() end
