@@ -7,20 +7,24 @@ local walkers=root:WaitForChild("AmbientPedestrians")
 local routes={
  -- Roads match current prototype, with simple turn-around loops.
  HighwaySouth={
-  Vector3.new(-640,0,30),Vector3.new(640,0,30),
-  Vector3.new(640,0,70),Vector3.new(-640,0,70)
+  Vector3.new(-640,0,30),Vector3.new(-250,0,30),Vector3.new(0,0,30),
+  Vector3.new(250,0,30),Vector3.new(640,0,30),Vector3.new(640,0,70),
+  Vector3.new(250,0,70),Vector3.new(0,0,70),Vector3.new(-250,0,70),Vector3.new(-640,0,70)
  },
  Downtown={
-  Vector3.new(-490,0,-235),Vector3.new(480,0,-235),
-  Vector3.new(480,0,-207),Vector3.new(-490,0,-207)
+  Vector3.new(-490,0,-235),Vector3.new(-220,0,-235),Vector3.new(0,0,-235),
+  Vector3.new(220,0,-235),Vector3.new(480,0,-235),Vector3.new(480,0,-207),
+  Vector3.new(220,0,-207),Vector3.new(0,0,-207),Vector3.new(-220,0,-207),Vector3.new(-490,0,-207)
  },
  East={
-  Vector3.new(390,0,-540),Vector3.new(390,0,530),
-  Vector3.new(418,0,530),Vector3.new(418,0,-540)
+  Vector3.new(390,0,-540),Vector3.new(390,0,-250),Vector3.new(390,0,30),
+  Vector3.new(390,0,250),Vector3.new(390,0,530),Vector3.new(418,0,530),
+  Vector3.new(418,0,250),Vector3.new(418,0,30),Vector3.new(418,0,-250),Vector3.new(418,0,-540)
  },
  West={
-  Vector3.new(-390,0,-540),Vector3.new(-390,0,530),
-  Vector3.new(-363,0,530),Vector3.new(-363,0,-540)
+  Vector3.new(-390,0,-540),Vector3.new(-390,0,-250),Vector3.new(-390,0,30),
+  Vector3.new(-390,0,250),Vector3.new(-390,0,530),Vector3.new(-363,0,530),
+  Vector3.new(-363,0,250),Vector3.new(-363,0,30),Vector3.new(-363,0,-250),Vector3.new(-363,0,-540)
  },
 }
 local walkersWaypoints={
