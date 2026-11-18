@@ -10,8 +10,268 @@ local RS=game:GetService("ReplicatedStorage")
 local world=W:FindFirstChild("UAE_City_Life")
 assert(world and world:FindFirstChild("Phase5_DubaiModern"),
  "V5 Dubai Modern place required. Open saved v5.1 in Studio EDIT mode first.")
-assert(world:FindFirstChild("Phase51_RoleplayHomes"),
- "Please install the v5.1 Zoom & Homes patch first, then this v5.2 patch.")
+-- Compatibility repair: some projects named v5.1 never actually built the villas.
+-- Bootstrap ONLY the missing houses, preserving the existing city, vehicles and missions.
+local originalHomes=world:FindFirstChild("Phase51_RoleplayHomes")
+if not originalHomes or not originalHomes:FindFirstChild("Villas") then
+ print("UAE v5.2: missing v5.1 villa neighbourhood detected; rebuilding it automatically.")
+ do
+  local function col(r,g,b) return Color3.fromRGB(r,g,b) end
+  local white=col(238,231,206)
+  local blue=col(76,152,181)
+  local sand=col(201,177,135)
+  local cream=col(224,216,200)
+  local glass=col(105,181,202)
+  local dark=col(38,56,66)
+  local function make(parent,name,size,cf,color,material,collide)
+   local p=Instance.new("Part")
+   p.Name=name
+   p.Size=size
+   p.CFrame=cf
+   p.Color=color or white
+   p.Material=material or Enum.Material.SmoothPlastic
+   p.Anchored=true
+   p.CanCollide=collide==true
+   p.TopSurface=Enum.SurfaceType.Smooth
+   p.BottomSurface=Enum.SurfaceType.Smooth
+   p.Parent=parent
+   return p
+  end
+  local previous=world:FindFirstChild("Phase51_RoleplayHomes")
+  if previous then previous:Destroy() end
+  local root=Instance.new("Folder")
+  root.Name="Phase51_RoleplayHomes"
+  root.Parent=world
+  local houses=Instance.new("Folder")
+  houses.Name="Villas"
+  houses.Parent=root
+  local street=Instance.new("Folder")
+  street.Name="ResidentialStreet"
+  street.Parent=root
+  make(street,"UAE Community Road",Vector3.new(875,.8,29),
+   CFrame.new(0,.3,-733),col(56,62,67),Enum.Material.Asphalt,true)
+  for x=-420,420,30 do
+   make(street,"Road Centerline",Vector3.new(15,.14,.7),
+    CFrame.new(x,.76,-733),white,nil,false)
+  end
+  make(street,"Villa Front Sidewalk",Vector3.new(900,1.2,16),
+   CFrame.new(0,.5,-760),cream,Enum.Material.Concrete,true)
+  local houseColors={
+   {col(232,214,180),col(154,178,184)},
+   {col(223,215,204),col(115,170,190)},
+   {col(211,226,215),col(116,175,169)},
+   {col(229,212,194),col(201,153,126)},
+  }
+  local xPositions={-330,-195,195,330}
+  for i,x in ipairs(xPositions) do
+   local z=-812
+   local c=houseColors[i]
+   local villa=Instance.new("Model")
+   villa.Name="UAE Villa "..i
+   villa.Parent=houses
+   villa:SetAttribute("OwnerUserId",0)
+   villa:SetAttribute("OwnerName","")
+   villa:SetAttribute("Locked",false)
+   villa:SetAttribute("DoorOpen",false)
+   local function piece(name,dim,dx,y,dz,tint,mat,solid)
+    return make(villa,name,dim,CFrame.new(x+dx,y,z+dz),tint,mat,solid)
+   end
+   piece("Stone house foundation",Vector3.new(78,1.4,60),0,.7,0,sand,Enum.Material.Concrete,true)
+   piece("Villa finished floor",Vector3.new(64,.6,48),0,1.7,0,c[1],Enum.Material.WoodPlanks,true)
+   piece("Back wall",Vector3.new(64,15,2),0,9.2,-24,c[1],Enum.Material.Concrete,true)
+   piece("Left wall",Vector3.new(2,15,48),-32,9.2,0,c[1],Enum.Material.Concrete,true)
+   piece("Right wall",Vector3.new(2,15,48),32,9.2,0,c[1],Enum.Material.Concrete,true)
+   piece("Front wall left",Vector3.new(25,15,2),-19,9.2,24,c[1],Enum.Material.Concrete,true)
+   piece("Front wall right",Vector3.new(25,15,2),19,9.2,24,c[1],Enum.Material.Concrete,true)
+   piece("Door arch above",Vector3.new(13,7,2),0,13.2,24,c[1],Enum.Material.Concrete,true)
+   piece("White roof",Vector3.new(71,2,55),0,18.2,0,col(242,237,219),Enum.Material.Concrete,true)
+   piece("Terrace roof border",Vector3.new(73,1.1,57),0,19.6,0,c[2],Enum.Material.Metal,false)
+   piece("Porch slab",Vector3.new(21,.8,18),0,1.7,30,cream,Enum.Material.Concrete,true)
+   local door=piece("FrontDoor",Vector3.new(10,8,.85),0,6.3,25.15,col(135,95,57),Enum.Material.Wood,true)
+   local doorHandle=piece("Door Handle",Vector3.new(.7,.7,.4),3.7,6.5,25.8,col(233,185,74),Enum.Material.Metal,false)
+   for _,sx in ipairs({-20,20}) do
+    piece("Panoramic window",Vector3.new(12,8,.4),sx,9.7,25.2,glass,Enum.Material.Glass,false)
+    piece("Window silver frame top",Vector3.new(13,.7,.8),sx,14,25.4,c[2],Enum.Material.Metal,false)
+    piece("Window silver frame sides",Vector3.new(.7,8,.8),sx+6,9.7,25.5,c[2],Enum.Material.Metal,false)
+    piece("Window silver frame sides",Vector3.new(.7,8,.8),sx-6,9.7,25.5,c[2],Enum.Material.Metal,false)
+   end
+   local wallSign=piece("StatusSign",Vector3.new(25,4,.5),0,15.3,25.3,dark,Enum.Material.SmoothPlastic,false)
+   local signGui=Instance.new("SurfaceGui")
+   signGui.Name="Villa Owner"
+   signGui.Face=Enum.NormalId.Back
+   signGui.PixelsPerStud=60
+   signGui.SizingMode=Enum.SurfaceGuiSizingMode.PixelsPerStud
+   signGui.Parent=wallSign
+   local signText=Instance.new("TextLabel")
+   signText.Name="OwnerName"
+   signText.Size=UDim2.fromScale(1,1)
+   signText.Font=Enum.Font.GothamBold
+   signText.TextScaled=true
+   signText.TextWrapped=true
+   signText.Text="UAE Villa "..i.."\nAVAILABLE"
+   signText.TextColor3=col(249,229,173)
+   signText.BackgroundTransparency=1
+   signText.Parent=signGui
+   -- Living room furniture, kitchen counter and bed: enough to roleplay inside.
+   piece("Sofa upholstered base",Vector3.new(15,3,7),15,3.5,-7,c[2],Enum.Material.Fabric,true)
+   piece("Sofa backrest",Vector3.new(15,6,1.5),15,5.6,-10,c[2],Enum.Material.Fabric,true)
+   piece("Living room table",Vector3.new(9,1.2,5),9,3.2,5,col(143,110,82),Enum.Material.Wood,true)
+   piece("Kitchen counter",Vector3.new(17,4.2,5),-18,4.3,-15,col(207,204,195),Enum.Material.Marble,true)
+   piece("Kitchen basin",Vector3.new(5,.4,3),-18,6.5,-15,col(105,133,142),Enum.Material.Metal,false)
+   local bed=piece("Bed",Vector3.new(14,1.5,8),-15,3.4,5,col(224,233,228),Enum.Material.Fabric,true)
+   piece("Bed headboard",Vector3.new(14,4,1),-15,4,1,col(129,100,77),Enum.Material.Wood,true)
+   piece("Pillow",Vector3.new(4,.7,2.5),-19,4.5,5,white,Enum.Material.Fabric,false)
+   -- Side garage area is decorative; player car spawning is future work.
+   piece("Driveway garage slab",Vector3.new(22,.9,39),48,.9,11,cream,Enum.Material.Concrete,true)
+   piece("Garage bay shelter",Vector3.new(25,1.5,25),48,12.5,-1,c[2],Enum.Material.Metal,false)
+   for _,gx in ipairs({37,59}) do
+    piece("Garage carport pillar",Vector3.new(1.4,11,1.4),gx,6,-11,c[2],Enum.Material.Metal,true)
+   end
+   local claimPad=piece("ClaimPad",Vector3.new(8,.4,8),-16,2.1,35,col(76,163,112),Enum.Material.Neon,false)
+   local lockPad=piece("LockPad",Vector3.new(5,4,.8),22,5.5,25.6,col(212,177,79),Enum.Material.Metal,false)
+   local function prompt(on,name,action)
+    local q=Instance.new("ProximityPrompt")
+    q.Name=name
+    q.ActionText=action
+    q.ObjectText="UAE Villa "..i
+    q.MaxActivationDistance=12
+    q.HoldDuration=.25
+    q.RequiresLineOfSight=false
+    q.Parent=on
+   end
+   prompt(claimPad,"ClaimHouse","Claim / release")
+   prompt(door,"OpenDoor","Open / close")
+   prompt(lockPad,"HomeLock","Lock / unlock")
+   prompt(bed,"RestAtHome","Rest")
+  end
+ end
+end
+-- Install the interactive claim/door/rest handler even when the villa folder
+-- already existed but its script was never installed.
+if not SS:FindFirstChild("UAE_Phase51Homes") then
+ local v51HomeLogic=Instance.new("Script")
+ v51HomeLogic.Name="UAE_Phase51Homes"
+ v51HomeLogic.Source=[========[
+-- UAE CITY LIFE v5.1: server-controlled Brookhaven-style house roleplay.
+-- Every user may keep their own Roblox avatar. Claims are per server/session.
+-- Neither house ownership nor furnishings are saved across servers yet.
+local Players=game:GetService("Players")
+local world=workspace:WaitForChild("UAE_City_Life")
+local homes=world:WaitForChild("Phase51_RoleplayHomes")
+local catalog=homes:WaitForChild("Villas")
+local ownedByUser={}
+local function getCharacterRoot(player)
+ local character=player.Character
+ return character and character:FindFirstChild("HumanoidRootPart")
+end
+local function near(player,p,maxDistance)
+ local root=getCharacterRoot(player)
+ return root and (root.Position-p.Position).Magnitude <=maxDistance
+end
+local function setNotice(model,message)
+ local status=model:FindFirstChild("StatusSign",true)
+ local gui=status and status:FindFirstChildOfClass("SurfaceGui")
+ local label=gui and gui:FindFirstChildOfClass("TextLabel")
+ if label then label.Text=message end
+end
+local function resetHome(home)
+ home:SetAttribute("OwnerUserId",0)
+ home:SetAttribute("OwnerName","")
+ home:SetAttribute("Locked",false)
+ home:SetAttribute("DoorOpen",false)
+ home:SetAttribute("DoorVersion",(home:GetAttribute("DoorVersion") or 0)+1)
+ local door=home:FindFirstChild("FrontDoor")
+ if door and door:IsA("BasePart") then
+  door.CanCollide=true
+  door.Transparency=.06
+ end
+ setNotice(home,home.Name.."\nAVAILABLE")
+end
+local function canUseDoor(player,home)
+ local owner=home:GetAttribute("OwnerUserId") or 0
+ local locked=home:GetAttribute("Locked")
+ return not locked or owner==player.UserId
+end
+for _,home in ipairs(catalog:GetChildren()) do
+ if home:IsA("Model") then
+  resetHome(home)
+  local claim=home:FindFirstChild("ClaimPad")
+  local door=home:FindFirstChild("FrontDoor")
+  local lock=home:FindFirstChild("LockPad")
+  local bed=home:FindFirstChild("Bed")
+  local claimPrompt=claim and claim:FindFirstChildOfClass("ProximityPrompt")
+  local doorPrompt=door and door:FindFirstChildOfClass("ProximityPrompt")
+  local lockPrompt=lock and lock:FindFirstChildOfClass("ProximityPrompt")
+  local bedPrompt=bed and bed:FindFirstChildOfClass("ProximityPrompt")
+  if claimPrompt then
+   claimPrompt.Triggered:Connect(function(player)
+    if not near(player,claim,15) then return end
+    local owner=home:GetAttribute("OwnerUserId") or 0
+    if owner==player.UserId then
+     ownedByUser[player.UserId]=nil
+     resetHome(home)
+     return
+    end
+    if owner~=0 then return end
+    local previous=ownedByUser[player.UserId]
+    if previous and previous.Parent then resetHome(previous) end
+    ownedByUser[player.UserId]=home
+    home:SetAttribute("OwnerUserId",player.UserId)
+    home:SetAttribute("OwnerName",player.DisplayName)
+    home:SetAttribute("Locked",false)
+    setNotice(home,home.Name.."\n"..player.DisplayName.."'s home")
+   end)
+  end
+  if doorPrompt then
+   doorPrompt.Triggered:Connect(function(player)
+    if not near(player,door,15) or not canUseDoor(player,home) then return end
+    local newState=not home:GetAttribute("DoorOpen")
+    home:SetAttribute("DoorOpen",newState)
+    door.CanCollide=not newState
+    door.Transparency=newState and .76 or .06
+    home:SetAttribute("DoorVersion",(home:GetAttribute("DoorVersion") or 0)+1)
+    local version=home:GetAttribute("DoorVersion")
+    if newState then
+     task.delay(9,function()
+      if home.Parent and home:GetAttribute("DoorVersion")==version then
+       home:SetAttribute("DoorOpen",false)
+       door.CanCollide=true
+       door.Transparency=.06
+      end
+     end)
+    end
+   end)
+  end
+  if lockPrompt then
+   lockPrompt.Triggered:Connect(function(player)
+    if not near(player,lock,15) then return end
+    if home:GetAttribute("OwnerUserId")~=player.UserId then return end
+    local locked=not home:GetAttribute("Locked")
+    home:SetAttribute("Locked",locked)
+    setNotice(home,home.Name.."\n"..player.DisplayName..(locked and " • LOCKED" or " • OPEN"))
+   end)
+  end
+  if bedPrompt then
+   bedPrompt.Triggered:Connect(function(player)
+    if not near(player,bed,15) or not canUseDoor(player,home) then return end
+    local char=player.Character
+    local hum=char and char:FindFirstChildOfClass("Humanoid")
+    if hum and hum.Health>0 then
+     hum.Health=math.min(hum.MaxHealth,hum.Health+25)
+    end
+   end)
+  end
+ end
+end
+Players.PlayerRemoving:Connect(function(player)
+ local home=ownedByUser[player.UserId]
+ if home and home.Parent then resetHome(home) end
+ ownedByUser[player.UserId]=nil
+end)
+
+]========]
+ v51HomeLogic.Parent=SS
+end
 local prior=world:FindFirstChild("Phase52_RoleplayDistrict")
 if prior then prior:Destroy() end
 local city=Instance.new("Folder")
