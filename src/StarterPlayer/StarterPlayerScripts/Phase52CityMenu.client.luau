@@ -125,6 +125,9 @@ end
 feedback.OnClientEvent:Connect(function(message)
  if typeof(message)=="string" and #message<180 then toast(message) end
 end)
+task.delay(2.5,function()
+ if gui.Parent then toast("New Dubai district: click CITY or press B to visit!") end
+end)
 local function toggle()
  panel.Visible=not panel.Visible
 end
