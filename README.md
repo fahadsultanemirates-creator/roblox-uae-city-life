@@ -139,3 +139,17 @@ The code:
 Read [**v5.2 install, exact key controls, feature list, limitations and test plan**](docs/PHASE5_2_ROLEPLAY_ZOOM.md).
 
 **Status:** GitHub source committed, consistency checks pending/complete as documented; Roblox Studio runtime and gameplay still **unverified**. GTA or Brookhaven maps/code/images/assets are **not copied**. Achieving comparably polished art will require genuine 3D modeling, bespoke textures, animation, collisions and performance work beyond this procedural patch.
+
+
+## NEW — Version 5.3: keyboard zoom + mouse look + Dubai community jobs
+
+**[Version 5.3 single-script patch](build/Patch_UAE_City_Life_v5_3_ControlsAndJobs.luau)**  
+**[Installation, key controls and Play-testing checklist](docs/PHASE5_3_CONTROLS_JOBS.md)**
+
+The v5.2 screenshot confirmed the custom camera worked with the touchpad but **I/O keyboard zoom did not**. The v5.3 camera uses **ContextActionService at higher priority** for I/O and adds **I+ / O− on-screen buttons**. **I = zoom in, O = zoom out**; **mouse right-click + drag rotates the view** instead of using scroll for zoom. Always click inside the game Play viewport after testing with the Command Bar to make sure keyboard focus is inside the game.
+
+Additionally, v5.3 introduces **Al Wasl Community Park** between the existing Dubai villa areas: landscaping, fountain, benches, lighting, three job kiosks and a **JOBS** menu to choose **Dubai Taxi**, **Clinic Helper** or **Dubai Tour Guide** shifts. Server-checked destination checkpoints earn temporary CityPoints; jobs are **prototypes**, not fully simulated taxi/medical systems.
+
+**Install on the working v5.2 place only.** In Roblox Studio Edit mode, create a v5.2 backup, copy the v5.3 script from GitHub **Raw**, replace the Command Bar text and click its small **Run** button. Look in **Output** for `UAE CITY LIFE v5.3 READY`, save as a NEW `Roblox_UAE_City_Life_v5_3.rbxl`, then press Play. To find the park, select **CITY → Homes & Villas** and walk south to the park entrance. Do not rerun v5.2's installer.
+
+**Not tested in Roblox Studio, not published.** These additions remain Roblox procedural Parts and simple job logic; they do not yet deliver Brookhaven-quality 3D model art, animated passengers, full driving simulation or persistent ownership.
