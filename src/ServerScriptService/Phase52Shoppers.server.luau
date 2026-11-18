@@ -48,7 +48,7 @@ for i,waypoints in ipairs(positions) do
   rig.Parent=crowd
   rig:PivotTo(CFrame.new(waypoints[1]))
   for _,p in ipairs(rig:GetDescendants()) do
-   if p:IsA("BasePart") and p.Name~="HumanoidRootPart" then p.CanCollide=false end
+   if p:IsA("BasePart") then p.CanCollide=(p.Name=="HumanoidRootPart") end
   end
   while crowd.Parent and hum.Health>0 do
    for n=2,#waypoints do
