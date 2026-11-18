@@ -208,6 +208,26 @@ action.OnServerEvent:Connect(function(player,kind,choice)
   tell(player,"Your personal vehicle has been removed.")
  end
 end)
+-- Trim the enormous old GAME OWNER billboard without removing owner recognition.
+local function tidyOwnerTag(character)
+ task.delay(2,function()
+  if not character.Parent then return end
+  local head=character:FindFirstChild("Head")
+  local label=head and head:FindFirstChild("UAEGameOwnerTag")
+  if label and label:IsA("BillboardGui") then
+   label.Size=UDim2.fromOffset(120,29)
+   label.StudsOffset=Vector3.new(0,2.9,0)
+   label.MaxDistance=75
+  end
+ end)
+end
+Players.PlayerAdded:Connect(function(player)
+ player.CharacterAdded:Connect(tidyOwnerTag)
+end)
+for _,player in ipairs(Players:GetPlayers()) do
+ player.CharacterAdded:Connect(tidyOwnerTag)
+ if player.Character then tidyOwnerTag(player.Character) end
+end
 Players.PlayerRemoving:Connect(function(player)
  safeRemove(player)
  lastAction[player]=nil
