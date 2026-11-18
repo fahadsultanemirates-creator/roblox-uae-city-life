@@ -118,3 +118,22 @@ v5.1 also adds **four claimable UAE villas**, owner signs, openable/lockable doo
 For details and test checklist: [docs/PHASE5_1_ZOOM_AND_HOMES.md](docs/PHASE5_1_ZOOM_AND_HOMES.md).
 
 **Status:** Source uploaded and checked, but still requires a Roblox Studio Play test. It is not published to Roblox.
+
+
+## Current incremental upgrade — **Version 5.2 (18 Nov 2026)**
+
+**Your reported problem:** v5.1's camera zoom still didn't respond; the minimap and signs remained intrusive, and the new district was too hard to find from the original emergency-vehicle spawn. The user requested **I zoom in**, **O zoom out**, and a more interactive **Brookhaven-style** game with its own Dubai identity.
+
+**[Install this standalone v5.2 Roleplay & I/O Zoom patch](build/Patch_UAE_City_Life_v5_2_RoleplayAndIOZoom.luau)** on your already saved **v5.1** Roblox Studio place. **Backup first; STOP Play; copy GitHub Raw script into Studio Command Bar and run Ctrl+Enter.** Save to a new `UAE_City_Life_v5_2.rbxl`.
+
+The code:
+- Replaces older camera scripts with a **keyboard-state-polled I/O third-person camera**; camera changes can be seen via an on-screen distance indicator. **I = in; O = out** while walking or driving. Right drag rotates, PageUp/Down tilts, C resets.
+- Shrinks the circular radar to **96 × 96 pixels**, reduces the clock/mission overlay and shrinks cluttering original vehicle/welcome signs and owner tag.
+- Adds a **CITY** menu (or B key) to travel directly to **Homes, E11, Downtown, Marina and Airport** — no searching the giant map to find new features.
+- Adds a walkable **roleplay shopping street** by the v5.1 villas: 6 interactive interiors (clinic, karak cafe, market, hotel, bank, fashion souq), better house facades, gardens, detailed pavement, decorative buses, lighting and six R15 pedestrians.
+- Offers **one personal drivable prototype car per player**: taxi, SUV or sedan. It uses existing prototype `UAE_Driving` code, not realistic vehicle physics or licensed imported assets.
+- Preserves v5/v5.1 landmarks, roleplay house ownership, three emergency vehicles, exploration missions and the four original UAE flags.
+
+Read [**v5.2 install, exact key controls, feature list, limitations and test plan**](docs/PHASE5_2_ROLEPLAY_ZOOM.md).
+
+**Status:** GitHub source committed, consistency checks pending/complete as documented; Roblox Studio runtime and gameplay still **unverified**. GTA or Brookhaven maps/code/images/assets are **not copied**. Achieving comparably polished art will require genuine 3D modeling, bespoke textures, animation, collisions and performance work beyond this procedural patch.
