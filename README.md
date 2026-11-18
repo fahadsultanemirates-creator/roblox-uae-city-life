@@ -124,6 +124,8 @@ For details and test checklist: [docs/PHASE5_1_ZOOM_AND_HOMES.md](docs/PHASE5_1_
 
 **Your reported problem:** v5.1's camera zoom still didn't respond; the minimap and signs remained intrusive, and the new district was too hard to find from the original emergency-vehicle spawn. The user requested **I zoom in**, **O zoom out**, and a more interactive **Brookhaven-style** game with its own Dubai identity.
 
+**Fix 18 Nov:** Earlier v5.2 code stopped at CommandBar line 13 when the v5.1 villa folder was missing. The GitHub installer now auto-rebuilds those villas. If you already pasted the old version, reopen **Raw**, copy the latest version, replace the Command Bar contents and click its **Run** button. No need to install v5.1 again.
+
 **[Install this standalone v5.2 Roleplay & I/O Zoom patch](build/Patch_UAE_City_Life_v5_2_RoleplayAndIOZoom.luau)** on your already saved **v5.1** Roblox Studio place. **Backup first; STOP Play; copy GitHub Raw script into Studio Command Bar and run Ctrl+Enter.** Save to a new `UAE_City_Life_v5_2.rbxl`.
 
 The code:
