@@ -4,8 +4,8 @@
 
 ## Install safely — one script
 
-1. Open **your existing saved v5.1 place** in Roblox Studio. Confirm Explorer contains `Workspace > UAE_City_Life > Phase5_DubaiModern` and `Phase51_RoleplayHomes`. These must both exist.
-2. Use **File → Save to File As** to back it up as `UAE_City_Life_v5_1_backup.rbxl`.
+1. Open **your saved v5 or v5.1 place** in Roblox Studio. Confirm Explorer contains `Workspace > UAE_City_Life > Phase5_DubaiModern`. If `Phase51_RoleplayHomes` is missing, the **repaired v5.2 installer now creates the missing v5.1 villas and home interactions automatically**.
+2. Use **File → Save to File As** to back it up as `UAE_City_Life_before_v5_2_backup.rbxl`.
 3. Press **STOP** to leave Play mode. Be in Edit mode before modifying the world.
 4. On GitHub, open the [**v5.2 all-in-one patch**](../build/Patch_UAE_City_Life_v5_2_RoleplayAndIOZoom.luau).
 5. Select **Raw**, then Ctrl+A, Ctrl+C to copy all its contents.
@@ -14,7 +14,7 @@
 8. Explorer should now contain `Workspace > UAE_City_Life > Phase52_RoleplayDistrict`. Save as **NEW** `Roblox_UAE_City_Life_v5_2.rbxl`.
 9. Press **Play**, then use the controls and check the improvements. Do not publish until tested.
 
-**Do not rerun v5, v5.1 or the v4 mega city generator on this place just to install v5.2.** You only need this v5.2 patch on top of your saved v5.1 game.
+**Do not rerun v5, v5.1 or the v4 mega city generator on this place just to install v5.2.** Version 5.2 repairs missing v5.1 houses automatically. The older pasted code will not self-update; re-open GitHub **Raw** and copy the latest file, replace ALL contents of the Command Bar, and click its small **Run** button. You only need this v5.2 patch on top of your saved v5.1 game.
 
 ## Mandatory zoom repair: I and O
 
