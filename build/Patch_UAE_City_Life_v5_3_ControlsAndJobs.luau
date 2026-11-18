@@ -44,7 +44,7 @@ local function vpart(parent,name,sz,x,y,z,clr,material,solid)
 end
 local function surfaceLabel(partObj,word)
  local s=Instance.new("SurfaceGui")
- s.Face=Enum.NormalId.Front
+ s.Face=Enum.NormalId.Back -- park signs face players approaching from the northern sidewalk
  s.PixelsPerStud=45
  s.LightInfluence=.15
  s.Parent=partObj
