@@ -18,7 +18,7 @@ local function control(name,caption,y)
  local b=Instance.new("TextButton")
  b.Name=name
  b.AnchorPoint=Vector2.new(1,0)
- b.Position=UDim2.new(1,-12,0,y)
+ b.Position=UDim2.new(1,-12,.5,y) -- anchored to live viewport center, not absolute screen pixels
  b.Size=UDim2.fromOffset(40,34)
  b.BackgroundColor3=bg
  b.BackgroundTransparency=.1
@@ -34,13 +34,13 @@ local function control(name,caption,y)
  rounded.Parent=b
  return b
 end
-local zoomIn=control("ZoomIn_I","I +",185)
-local zoomOut=control("ZoomOut_O","O −",225)
-local reset=control("CameraReset","C",265)
+local zoomIn=control("ZoomIn_I","I +",-57)
+local zoomOut=control("ZoomOut_O","O −",-17)
+local reset=control("CameraReset","C",23)
 local info=Instance.new("TextLabel")
 info.Name="CameraHelp"
 info.AnchorPoint=Vector2.new(1,0)
-info.Position=UDim2.new(1,-59,0,185)
+info.Position=UDim2.new(1,-59,.5,-57)
 info.Size=UDim2.fromOffset(130,74)
 info.BackgroundColor3=bg
 info.BackgroundTransparency=.15
@@ -62,6 +62,9 @@ local mouseHeld=false
 local modeWas=""
 local initialized=false
 local nextRepeat=0
+local lastKeyPressAt=-10
+local lastKeyPressed=nil
+print("[UAE v5.3.1] Camera client started; I / O and right-side zoom buttons loaded")
 local function state()
  local ch=player.Character
  local hum=ch and ch:FindFirstChildOfClass("Humanoid")
@@ -89,11 +92,19 @@ zoomIn.Activated:Connect(function() zoom(true) end)
 zoomOut.Activated:Connect(function() zoom(false) end)
 reset.Activated:Connect(defaultView)
 -- Keyboard action handlers take priority over Roblox's default I/O camera bindings.
+local function pressKey(keyCode)
+ if UIS:GetFocusedTextBox() then return end
+ local now=os.clock()
+ if lastKeyPressed==keyCode and now-lastKeyPressAt<.14 then return end
+ lastKeyPressAt=now
+ lastKeyPressed=keyCode
+ zoom(keyCode==Enum.KeyCode.I)
+ nextRepeat=now+.28
+end
 local function onKeyboard(actionName,inputState)
  if UIS:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
  if inputState==Enum.UserInputState.Begin then
-  zoom(actionName=="UAE_V53_ZoomIn")
-  nextRepeat=os.clock()+.28
+  pressKey(actionName=="UAE_V53_ZoomIn" and Enum.KeyCode.I or Enum.KeyCode.O)
  end
  return Enum.ContextActionResult.Sink
 end
@@ -101,7 +112,12 @@ CAS:BindActionAtPriority("UAE_V53_ZoomIn",onKeyboard,false,4000,Enum.KeyCode.I)
 CAS:BindActionAtPriority("UAE_V53_ZoomOut",onKeyboard,false,4000,Enum.KeyCode.O)
 UIS.InputBegan:Connect(function(input,processed)
  if input.UserInputType==Enum.UserInputType.MouseButton2 then mouseHeld=true end
- if UIS:GetFocusedTextBox() or processed then return end
+ if UIS:GetFocusedTextBox() then return end
+ -- Fallback for keyboard layouts / CoreScript priority differences.
+ if input.KeyCode==Enum.KeyCode.I or input.KeyCode==Enum.KeyCode.O then
+  pressKey(input.KeyCode)
+ end
+ if processed then return end
  if input.KeyCode==Enum.KeyCode.C then defaultView()
  elseif input.KeyCode==Enum.KeyCode.PageUp then
   pitch=math.clamp(pitch+math.rad(9),math.rad(5),math.rad(77))
@@ -121,6 +137,8 @@ UIS.InputChanged:Connect(function(input)
   pitch=math.clamp(pitch+input.Delta.Y*.005,math.rad(5),math.rad(77))
  end
 end)
+pcall(function() RS:UnbindFromRenderStep("UAE_V52_KBZoomCamera") end)
+pcall(function() RS:UnbindFromRenderStep("UAE_V53_OrbitCamera") end)
 RS:BindToRenderStep("UAE_V53_OrbitCamera",Enum.RenderPriority.Camera.Value+90,function(dt)
  local camera=workspace.CurrentCamera
  local ch,hum,root,car=state()
