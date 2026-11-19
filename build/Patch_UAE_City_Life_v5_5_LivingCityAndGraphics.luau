@@ -425,7 +425,18 @@ local function handle(player,node)
   s.caseStage=0
   lastCompleted[player]=os.clock()
   points(player,140)
-  send(player,"RESCUE COMPLETED","Incident closed, damaged vehicle repaired (roleplay). +140 CityPoints.")
+  local damaged=crash:FindFirstChild("Damaged sedan (stationary exercise)")
+  local bonnet=damaged and damaged:FindFirstChild("Bent bonnet")
+  local exhaust=damaged and damaged:FindFirstChild("Engine smoke source")
+  local smoke=exhaust and exhaust:FindFirstChildOfClass("ParticleEmitter")
+  if smoke then smoke.Enabled=false end
+  if bonnet then bonnet.Color=Color3.fromRGB(65,135,179) end
+  -- Reset the training scene after a short respite for the next player.
+  task.delay(25,function()
+   if smoke and smoke.Parent then smoke.Enabled=true end
+   if bonnet and bonnet.Parent then bonnet.Color=Color3.fromRGB(26,54,72) end
+  end)
+  send(player,"RESCUE COMPLETED","Incident closed: hazard smoke cleared and vehicle repaired. +140 CityPoints.")
  end
 end
 local count=0
