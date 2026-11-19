@@ -697,6 +697,7 @@ for i=1,spawnCount do
    hum.HealthDisplayType=Enum.HumanoidHealthDisplayType.AlwaysOff
    hum.WalkSpeed=entry.walk and 7 or 0
    hum.JumpPower=0
+   model.Parent=folder -- Animator must be inside Workspace before loading an animation
    -- Roblox's standard R15 walking animation (no external copyrighted game assets).
    if entry.walk then
     local animator=hum:FindFirstChildOfClass("Animator") or Instance.new("Animator")
@@ -730,7 +731,6 @@ for i=1,spawnCount do
      if n~="HumanoidRootPart" then part.CanCollide=false end
     end
    end
-   model.Parent=folder
    model:PivotTo(CFrame.new(entry.x,4,entry.z))
    created=created+1
    if entry.walk then
