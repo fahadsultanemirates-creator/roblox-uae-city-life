@@ -46,6 +46,26 @@ for i=1,spawnCount do
    hum.HealthDisplayType=Enum.HumanoidHealthDisplayType.AlwaysOff
    hum.WalkSpeed=entry.walk and 7 or 0
    hum.JumpPower=0
+   -- Roblox's standard R15 walking animation (no external copyrighted game assets).
+   if entry.walk then
+    local animator=hum:FindFirstChildOfClass("Animator") or Instance.new("Animator")
+    animator.Parent=hum
+    local walkAnim=Instance.new("Animation")
+    walkAnim.Name="UAE55_StandardWalk"
+    walkAnim.AnimationId="rbxassetid://507777826"
+    walkAnim.Parent=model
+    local okWalk,track=pcall(function() return animator:LoadAnimation(walkAnim) end)
+    if okWalk and track then
+     track.Priority=Enum.AnimationPriority.Movement
+     track.Looped=true
+     hum.Running:Connect(function(speed)
+      if speed>1 then
+       if not track.IsPlaying then track:Play(.2) end
+       track:AdjustSpeed(math.max(.3,speed/12))
+      elseif track.IsPlaying then track:Stop(.2) end
+     end)
+    end
+   end
    for _,part in ipairs(model:GetDescendants()) do
     if part:IsA("BasePart") then
      local n=part.Name
