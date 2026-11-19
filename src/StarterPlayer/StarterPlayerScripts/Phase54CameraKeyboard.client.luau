@@ -87,7 +87,7 @@ local function defaultView()
  dist=20
  yaw=0
  pitch=math.rad(16)
- info.Text="I / O  •  ZOOM\nRight-drag • LOOK\nCAM 20 studs"
+ info.Text="I / O or = / -\nRight-drag LOOK\nCAM 20 studs"
 end
 zoomIn.Activated:Connect(function() zoom(true) end)
 zoomOut.Activated:Connect(function() zoom(false) end)
@@ -106,10 +106,11 @@ local function pressKey(keyCode)
  zoom(keyCode==Enum.KeyCode.I or keyCode==Enum.KeyCode.Equals)
  nextRepeat=now+.28
 end
-local function onKeyboard(actionName,inputState)
+local function onKeyboard(actionName,inputState,inputObject)
  if UIS:GetFocusedTextBox() then return Enum.ContextActionResult.Pass end
  if inputState==Enum.UserInputState.Begin then
-  pressKey(actionName=="UAE_V54_ZoomIn" and Enum.KeyCode.I or Enum.KeyCode.O)
+  pressKey(inputObject and inputObject.KeyCode or
+   (actionName=="UAE_V54_ZoomIn" and Enum.KeyCode.I or Enum.KeyCode.O))
  end
  return Enum.ContextActionResult.Sink
 end
@@ -161,7 +162,7 @@ RS:BindToRenderStep("UAE_V54_OrbitCamera",Enum.RenderPriority.Camera.Value+90,fu
   modeWas=mode
   initialized=false
   dist=car and 37 or 20
-  info.Text=string.format("I / O  •  ZOOM\nRight-drag • LOOK\nCAM %d studs",dist)
+  info.Text=string.format("I/O or =/- ZOOM\nRight-drag LOOK\nCAM %d studs",dist)
  end
  if not UIS:GetFocusedTextBox() and os.clock()>nextRepeat then
   if UIS:IsKeyDown(Enum.KeyCode.I) or UIS:IsKeyDown(Enum.KeyCode.Equals) then
