@@ -1,0 +1,59 @@
+-- UAE City Life v5.4: central catalogue of IN-GAME destinations.
+-- Coordinates refer to this fictional Roblox layout, NOT real-world GPS.
+local destinations={
+ {id="BURJ",name="Burj Khalifa",category="Landmarks",position=Vector3.new(-84,6,-392),description="Downtown skyline tower"},
+ {id="MALL",name="Dubai Mall",category="Shopping",position=Vector3.new(100,6,-399),description="Downtown retail and attractions"},
+ {id="MUSEUM",name="Museum of the Future",category="Landmarks",position=Vector3.new(315,6,-1180),description="Iconic museum-inspired landmark"},
+ {id="FRAME",name="Dubai Frame",category="Landmarks",position=Vector3.new(-770,5,-830),description="Gold architectural frame"},
+ {id="ARAB",name="Burj Al Arab",category="Landmarks",position=Vector3.new(1125,6,-940),description="Sail-shaped coastal hotel"},
+ {id="E11",name="Sheikh Zayed Road",category="Transport",position=Vector3.new(0,5,-1200),description="Main expressway corridor"},
+ {id="DXB",name="Dubai International Airport",category="Transport",position=Vector3.new(-1070,5,-1260),description="Airport terminal and apron"},
+ {id="METRO",name="Dubai Metro Station",category="Transport",position=Vector3.new(194,25,-1215),description="Elevated metro station"},
+ {id="MARINA",name="Dubai Marina",category="Leisure",position=Vector3.new(1060,5,-1285),description="Harbour, yachts and promenade"},
+ {id="CRUISE",name="Cruise Port",category="Transport",position=Vector3.new(1110,5,-1450),description="Cruise terminal waterfront"},
+ {id="MED",name="Dubai Medical Centre",category="Services",position=Vector3.new(-235,5,-1175),description="Hospital and medical centre on E11"},
+ {id="POLICE",name="Dubai Police Station",category="Services",position=Vector3.new(-960,5,-480),description="Community police office"},
+ {id="FIRE",name="Civil Defence Station",category="Services",position=Vector3.new(-930,5,-630),description="Civil defence service station"},
+ {id="SHOP",name="Dubai City Mall",category="Shopping",position=Vector3.new(620,5,-996),description="West-end retail plaza"},
+ {id="SOUK",name="Souk & Cafe",category="Shopping",position=Vector3.new(430,5,-996),description="Souk shops and cafes"},
+ {id="HOTEL",name="E11 Grand Hotel",category="Services",position=Vector3.new(-550,5,-980),description="Sheikh Zayed Road hotel"},
+ {id="DESK",name="Emirates Tour Desk",category="Services",position=Vector3.new(-400,5,-965),description="Tourism and city information"},
+ {id="HOMES",name="Dubai Villas",category="Living",position=Vector3.new(0,5,-790),description="Claimable homes and gardens"},
+ {id="PARK",name="Al Wasl Community Park",category="Leisure",position=Vector3.new(0,5,-850),description="Fountain, trees and family activities"},
+ {id="CLINIC",name="Dubai Clinic",category="Services",position=Vector3.new(-370,5,-665),description="Neighbourhood clinic and help"},
+ {id="KARAK",name="Karak Cafe",category="Shopping",position=Vector3.new(-225,5,-665),description="Local cafe and refreshments"},
+ {id="MARKET",name="City Market",category="Shopping",position=Vector3.new(-80,5,-665),description="Everyday grocery shop"},
+ {id="WASL",name="Hotel Al Wasl",category="Services",position=Vector3.new(80,5,-665),description="City hotel and lobby"},
+ {id="BANK",name="Dubai Bank",category="Services",position=Vector3.new(225,5,-665),description="Bank reception"},
+ {id="FASHION",name="Fashion Souq",category="Shopping",position=Vector3.new(370,5,-665),description="Clothing shops"},
+ {id="SHJ",name="Sharjah Heritage",category="Landmarks",position=Vector3.new(390,5,-380),description="Emirate heritage district"},
+ {id="AJMAN",name="Ajman Beach",category="Leisure",position=Vector3.new(390,5,210),description="Beach destination"},
+ {id="BEACH",name="Jumeirah Beach Walk",category="Leisure",position=Vector3.new(1050,5,-720),description="Beach promenade"},
+ {id="ARRIVE",name="Airport Arrivals Plaza",category="Transport",position=Vector3.new(-970,5,-1120),description="Terminal pickup and taxi zone"},
+ {id="GARDEN",name="Dubai Community Gardens",category="Leisure",position=Vector3.new(-940,5,-890),description="Green public space"},
+ {id="TAXI",name="Residential Taxi Stand",category="Transport",position=Vector3.new(0,5,-746),description="Personal vehicle garage area"},
+ {id="HELIPAD",name="Helicopter Viewing Deck",category="Leisure",position=Vector3.new(-1010,5,-780),description="Helicopter sightseeing viewpoint"},
+}
+-- v5.5 actual ENTERABLE service doors and incident staging area.
+table.insert(destinations,{id="HOSP55",name="Dubai Hospital Reception",category="Services",
+ position=Vector3.new(-235,5,-1090),description="Enter hospital lobby, receive treatment and check in"})
+table.insert(destinations,{id="HOTEL55",name="Al Wasl Hotel Reception",category="Services",
+ position=Vector3.new(-550,5,-870),description="Enter hotel lobby, book a room and rest"})
+table.insert(destinations,{id="AIR55",name="DXB Airport Passenger Check-in",category="Transport",
+ position=Vector3.new(-1150,5,-996),description="Airport boarding pass and sightseeing transfer"})
+table.insert(destinations,{id="POL55",name="Dubai Police Reception",category="Services",
+ position=Vector3.new(-1120,5,-475),description="Report an incident or request accident response duty"})
+table.insert(destinations,{id="FIRE55",name="Dubai Civil Defence Reception",category="Services",
+ position=Vector3.new(-1120,5,-650),description="Join road rescue and emergency drills"})
+table.insert(destinations,{id="ACC55",name="Traffic Accident Training Scene",category="Services",
+ position=Vector3.new(-830,5,-740),description="Inspect collision and assist emergency services"})
+local byId={}
+local categories={"All","Landmarks","Transport","Services","Shopping","Living","Leisure"}
+for _,place in ipairs(destinations) do byId[place.id]=place end
+return {
+ List=destinations,
+ ById=byId,
+ Categories=categories,
+ -- Drawing extents in game-world studs, not geographical longitude/latitude
+ Bounds={xmin=-1600,xmax=1650,zmin=-1530,zmax=750},
+}
