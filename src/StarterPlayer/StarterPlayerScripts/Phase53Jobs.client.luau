@@ -31,7 +31,7 @@ local function button(parent,name,txt,pos,size,color)
  b.Position=pos
  b.Font=Enum.Font.GothamBold
  b.TextSize=13
- b.TextColor=white
+ b.TextColor3=white
  b.BackgroundColor3=color or aqua
  b.BorderSizePixel=0
  b.Parent=parent
