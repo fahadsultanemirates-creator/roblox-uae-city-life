@@ -522,7 +522,7 @@ local updates=RS:WaitForChild("UAE_V54_MissionUpdate",25)
 local gui=Instance.new("ScreenGui")
 gui.Name="UAE_V54_CityGuide"
 gui.ResetOnSpawn=false
-gui.DisplayOrder=27
+gui.DisplayOrder=60 -- ensure the opened atlas is above CITY/JOBS/camera buttons
 gui.IgnoreGuiInset=false
 gui.Parent=player:WaitForChild("PlayerGui")
 local C={
@@ -879,6 +879,7 @@ for _,loc in ipairs(all) do
 end
 local function showPage(page)
  currentPage=page or "Places"
+ search.Text=""
  panel.Visible=true
  updateList()
 end
