@@ -117,6 +117,9 @@ round(miniTarget,5)
 miniTarget.Visible=false
 local radarOpen=button(gui,"OpenCityMap","MAP / M",UDim2.fromOffset(12,152),
  UDim2.fromOffset(100,25),C.navy,24)
+local clickRadar=button(radar,"OpenByClickingRadar","",
+ UDim2.fromScale(0,0),UDim2.fromScale(1,1),C.dark,26)
+clickRadar.BackgroundTransparency=1
 local clock=frame(gui,"DubaiClock",UDim2.new(1,-183,0,13),
  UDim2.fromOffset(171,37),C.navy,24)
 round(clock,8)
@@ -365,6 +368,7 @@ local function toggleMap()
  end
 end
 radarOpen.Activated:Connect(toggleMap)
+clickRadar.Activated:Connect(toggleMap)
 missionQuick.Activated:Connect(function()
  if panel.Visible and currentPage=="Missions" then panel.Visible=false
  else showPage("Missions") end
@@ -442,8 +446,40 @@ local function drawMap(playerPos)
   selectedLabel.Visible=false
  end
 end
+-- One client-only GPS beacon makes the selected destination visible in 3D.
+local gpsAnchor=Instance.new("Part")
+gpsAnchor.Name="UAE_V54_LocalGPSDestination"
+gpsAnchor.Anchored=true
+gpsAnchor.CanCollide=false
+gpsAnchor.CanTouch=false
+gpsAnchor.CanQuery=false
+gpsAnchor.Size=Vector3.new(.2,.2,.2)
+gpsAnchor.Transparency=1
+gpsAnchor.Parent=workspace
+local gpsBillboard=Instance.new("BillboardGui")
+gpsBillboard.Name="WaypointBeacon"
+gpsBillboard.Adornee=gpsAnchor
+gpsBillboard.AlwaysOnTop=true
+gpsBillboard.Size=UDim2.fromOffset(154,42)
+gpsBillboard.MaxDistance=450
+gpsBillboard.StudsOffsetWorldSpace=Vector3.new(0,6,0)
+gpsBillboard.Enabled=false
+gpsBillboard.Parent=gpsAnchor
+local worldLabel=text(gpsBillboard,"DestinationLabel","GPS DESTINATION",
+ UDim2.fromScale(0,0),UDim2.fromScale(1,1),13,C.gold,1)
+worldLabel.TextXAlignment=Enum.TextXAlignment.Center
+worldLabel.BackgroundColor3=C.navy
+worldLabel.BackgroundTransparency=.08
+round(worldLabel,8)
 local function updateRadarAndText(root)
  local target=activeDestination()
+ if target then
+  gpsAnchor.CFrame=CFrame.new(target.position+Vector3.new(0,7,0))
+  worldLabel.Text=target.name
+  gpsBillboard.Enabled=true
+ else
+  gpsBillboard.Enabled=false
+ end
  if not root then
   miniTarget.Visible=false
   return
