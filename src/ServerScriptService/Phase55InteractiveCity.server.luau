@@ -10,7 +10,14 @@ local status=RS:FindFirstChild("UAE55_ServiceStatus")
 if not status then
  status=Instance.new("RemoteEvent");status.Name="UAE55_ServiceStatus";status.Parent=RS
 end
+local travelRequest=RS:FindFirstChild("UAE55_ServiceTravel")
+if not travelRequest then
+ travelRequest=Instance.new("RemoteEvent")
+ travelRequest.Name="UAE55_ServiceTravel"
+ travelRequest.Parent=RS
+end
 local state={}
+local lastTravel={}
 local lastUsed={}
 local lastCompleted={}
 local waypoints={
@@ -164,7 +171,30 @@ for _,collection in ipairs({services,crash}) do
   end
  end
 end
+-- Fast travel to service reception areas is for navigation/testing; the server chooses
+-- destinations, never accepts client-provided positions.
+local lobbyTravel={
+ Hospital=Vector3.new(-235,5,-1059),
+ Hotel=Vector3.new(-550,5,-839),
+ Airport=Vector3.new(-1150,5,-965),
+ Police=Vector3.new(-1120,5,-450),
+ Incident=Vector3.new(-830,5,-706)
+}
+travelRequest.OnServerEvent:Connect(function(player,name)
+ if typeof(name)~="string" or #name>20 then return end
+ local goal=lobbyTravel[name]
+ if not goal then return end
+ local rootPart,hum=getRoot(player)
+ if not rootPart then return end
+ local now=os.clock()
+ if lastTravel[player] and now-lastTravel[player]<3 then return end
+ lastTravel[player]=now
+ if hum.Sit then hum.Sit=false end
+ local character=player.Character
+ if character and character.Parent then character:PivotTo(CFrame.new(goal)) end
+ send(player,"CITY SERVICES","Arrived near "..name..". Approach the counter and press E.")
+end)
 Players.PlayerRemoving:Connect(function(player)
- state[player]=nil;lastUsed[player]=nil;lastCompleted[player]=nil
+ state[player]=nil;lastUsed[player]=nil;lastCompleted[player]=nil;lastTravel[player]=nil
 end)
 print("[UAE v5.5] Interactive city services started: "..count.." check-in, treatment, hotel, airport and road-rescue prompts")
