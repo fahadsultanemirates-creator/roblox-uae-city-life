@@ -174,3 +174,12 @@ The upgrade adds a **32-point searchable in-game Dubai city atlas** (tap the sma
 Additional scenery: Western Dubai community police/Civil Defence stations, gardens, street furniture, decorative service cars, airport arrivals and taxi stands, Dubai Marina promenade and Jumeirah Beach Walk, helicopter viewing point, more road signs, palms and lighting. Ten new **server-checked non-combat roleplay missions** include police, Civil Defence, ambulance, transport, tourism, healthcare, community service and delivery checkpoint routes; points are **temporary per server session**. Previously built missions and jobs are retained.
 
 **Camera:** I (zoom in) and O (zoom out) are attempted with priority bindings, fallback key events and polling, but Roblox has an ongoing engine input conflict in some Studio versions. **= zooms in and - zooms out** as keyboard fallbacks; the on-screen I+ and O− buttons remain. Right-click dragging rotates the camera. The game is not yet Play-tested or published; successful GitHub upload is not proof of working Roblox gameplay. Graphics remain improved **stylized procedural Roblox Parts**, not ready-made premium 3D art.
+
+
+## v5.5 — Living City, Interactive Services, Accident Response & Graphics Pass
+
+[**Open v5.5 all-in-one installer**](build/Patch_UAE_City_Life_v5_5_LivingCityAndGraphics.luau) • [**Version 5.5 install + testing guide**](docs/PHASE5_5_LIVING_CITY_GRAPHICS_AND_SERVICES.md)
+
+Install from **Roblox Studio Command Bar in Edit mode**, over your saved **working v5.4** place **after making a backup**, and save as `Roblox_UAE_City_Life_v5_5.rbxl`. When you press Play, server scripts build 5 open, enterable service annexes (hospital, hotel, airport, Police and Civil Defence), staged traffic accident rescue, improved-looking E11 lane vehicles and R15 NPCs. Use **E** near service counters, **L** for the compact LIFE guide, **M** for the existing expanded city map. There are now **38 searchable in-game destinations** including the new service interiors.
+
+**Scope and honesty:** This patch brings real gameplay responses (health treatment, hotel check-in/rest, sightseeing-transfer teleports, rescue stages and session CityPoints), but **does not** yet make all buildings fully functional, make cars physically crash, or turn procedural block art into photorealistic mesh graphics. Test in Studio before considering it complete. The version on GitHub is code only and has not been Play-tested by ChatGPT or published to Roblox. The installer defaults to `PERFORMANCE_MODE=true` for an older Dell laptop.
