@@ -297,7 +297,14 @@ local status=RS:FindFirstChild("UAE55_ServiceStatus")
 if not status then
  status=Instance.new("RemoteEvent");status.Name="UAE55_ServiceStatus";status.Parent=RS
 end
+local travelRequest=RS:FindFirstChild("UAE55_ServiceTravel")
+if not travelRequest then
+ travelRequest=Instance.new("RemoteEvent")
+ travelRequest.Name="UAE55_ServiceTravel"
+ travelRequest.Parent=RS
+end
 local state={}
+local lastTravel={}
 local lastUsed={}
 local lastCompleted={}
 local waypoints={
@@ -451,8 +458,31 @@ for _,collection in ipairs({services,crash}) do
   end
  end
 end
+-- Fast travel to service reception areas is for navigation/testing; the server chooses
+-- destinations, never accepts client-provided positions.
+local lobbyTravel={
+ Hospital=Vector3.new(-235,5,-1059),
+ Hotel=Vector3.new(-550,5,-839),
+ Airport=Vector3.new(-1150,5,-965),
+ Police=Vector3.new(-1120,5,-450),
+ Incident=Vector3.new(-830,5,-706)
+}
+travelRequest.OnServerEvent:Connect(function(player,name)
+ if typeof(name)~="string" or #name>20 then return end
+ local goal=lobbyTravel[name]
+ if not goal then return end
+ local rootPart,hum=getRoot(player)
+ if not rootPart then return end
+ local now=os.clock()
+ if lastTravel[player] and now-lastTravel[player]<3 then return end
+ lastTravel[player]=now
+ if hum.Sit then hum.Sit=false end
+ local character=player.Character
+ if character and character.Parent then character:PivotTo(CFrame.new(goal)) end
+ send(player,"CITY SERVICES","Arrived near "..name..". Approach the counter and press E.")
+end)
 Players.PlayerRemoving:Connect(function(player)
- state[player]=nil;lastUsed[player]=nil;lastCompleted[player]=nil
+ state[player]=nil;lastUsed[player]=nil;lastCompleted[player]=nil;lastTravel[player]=nil
 end)
 print("[UAE v5.5] Interactive city services started: "..count.." check-in, treatment, hotel, airport and road-rescue prompts")
 
@@ -756,12 +786,35 @@ btn.Size=UDim2.fromOffset(90,30);btn.Position=UDim2.new(1,-183,0,54)
 btn.BackgroundColor3=bg;btn.Parent=gui;corner(btn,8)
 local pop=Instance.new("Frame")
 pop.Name="ServiceInstructions";pop.BackgroundColor3=bg
-pop.Size=UDim2.fromOffset(274,186);pop.Position=UDim2.new(1,-286,0,89)
+pop.Size=UDim2.fromOffset(274,278);pop.Position=UDim2.new(1,-286,0,89)
 pop.BorderSizePixel=0;pop.Visible=false;pop.Parent=gui;corner(pop,12)
 label(pop,"LIVING CITY  •  SERVICES",14,UDim2.fromOffset(11,7),
  UDim2.fromOffset(255,23),tint)
 label(pop,"HOSPITAL: check in → treatment\nHOTEL: book room → rest\nAIRPORT: check in → boarding transfer\nPOLICE / CIVIL DEFENCE: accept road rescue\nACCIDENT: inspect → clear → repair\nUse E when near a service desk.\nSearch for these places in MAP / M.",11,
- UDim2.fromOffset(11,33),UDim2.new(1,-18,1,-39),fg)
+ UDim2.fromOffset(11,33),UDim2.fromOffset(252,142),fg)
+local travelRemote=RS:WaitForChild("UAE55_ServiceTravel",25)
+local destinations={
+ {"HOSPITAL","Hospital"},{"HOTEL","Hotel"},{"AIRPORT","Airport"},
+ {"POLICE","Police"},{"ACCIDENT","Incident"}
+}
+for i,entry in ipairs(destinations) do
+ local b=Instance.new("TextButton")
+ b.Name="Travel_"..entry[2]
+ b.Text=entry[1]
+ b.Font=Enum.Font.GothamBold
+ b.TextSize=10;b.TextColor3=fg
+ b.BackgroundColor3=Color3.fromRGB(50,117,126)
+ b.Size=UDim2.fromOffset(80,31)
+ b.Position=UDim2.fromOffset(10+((i-1)%3)*87,179+math.floor((i-1)/3)*38)
+ b.Parent=pop
+ corner(b,7)
+ b.Activated:Connect(function()
+  pop.Visible=false
+  if travelRemote then travelRemote:FireServer(entry[2]) end
+ end)
+end
+label(pop,"FAST TRAVEL • click a destination",
+ 10,UDim2.fromOffset(11,256),UDim2.fromOffset(252,16),tint)
 btn.Activated:Connect(function() pop.Visible=not pop.Visible end)
 UIS.InputBegan:Connect(function(input,processed)
  if processed or UIS:GetFocusedTextBox() then return end
