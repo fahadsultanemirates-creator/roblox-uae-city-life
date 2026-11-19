@@ -28,12 +28,35 @@ btn.Size=UDim2.fromOffset(90,30);btn.Position=UDim2.new(1,-183,0,54)
 btn.BackgroundColor3=bg;btn.Parent=gui;corner(btn,8)
 local pop=Instance.new("Frame")
 pop.Name="ServiceInstructions";pop.BackgroundColor3=bg
-pop.Size=UDim2.fromOffset(274,186);pop.Position=UDim2.new(1,-286,0,89)
+pop.Size=UDim2.fromOffset(274,278);pop.Position=UDim2.new(1,-286,0,89)
 pop.BorderSizePixel=0;pop.Visible=false;pop.Parent=gui;corner(pop,12)
 label(pop,"LIVING CITY  •  SERVICES",14,UDim2.fromOffset(11,7),
  UDim2.fromOffset(255,23),tint)
 label(pop,"HOSPITAL: check in → treatment\nHOTEL: book room → rest\nAIRPORT: check in → boarding transfer\nPOLICE / CIVIL DEFENCE: accept road rescue\nACCIDENT: inspect → clear → repair\nUse E when near a service desk.\nSearch for these places in MAP / M.",11,
- UDim2.fromOffset(11,33),UDim2.new(1,-18,1,-39),fg)
+ UDim2.fromOffset(11,33),UDim2.fromOffset(252,142),fg)
+local travelRemote=RS:WaitForChild("UAE55_ServiceTravel",25)
+local destinations={
+ {"HOSPITAL","Hospital"},{"HOTEL","Hotel"},{"AIRPORT","Airport"},
+ {"POLICE","Police"},{"ACCIDENT","Incident"}
+}
+for i,entry in ipairs(destinations) do
+ local b=Instance.new("TextButton")
+ b.Name="Travel_"..entry[2]
+ b.Text=entry[1]
+ b.Font=Enum.Font.GothamBold
+ b.TextSize=10;b.TextColor3=fg
+ b.BackgroundColor3=Color3.fromRGB(50,117,126)
+ b.Size=UDim2.fromOffset(80,31)
+ b.Position=UDim2.fromOffset(10+((i-1)%3)*87,179+math.floor((i-1)/3)*38)
+ b.Parent=pop
+ corner(b,7)
+ b.Activated:Connect(function()
+  pop.Visible=false
+  if travelRemote then travelRemote:FireServer(entry[2]) end
+ end)
+end
+label(pop,"FAST TRAVEL • click a destination",
+ 10,UDim2.fromOffset(11,256),UDim2.fromOffset(252,16),tint)
 btn.Activated:Connect(function() pop.Visible=not pop.Visible end)
 UIS.InputBegan:Connect(function(input,processed)
  if processed or UIS:GetFocusedTextBox() then return end
