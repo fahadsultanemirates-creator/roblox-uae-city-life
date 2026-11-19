@@ -460,7 +460,7 @@ local function updateRadarAndText(root)
   if look.Magnitude>.1 and d>2 then
    local dir=dv.Unit
    local theta=math.deg(math.atan2(look.X*dir.Y-look.Y*dir.X,look:Dot(dir)))
-   if math.abs(theta>0 and theta or theta)>40 then
+   if math.abs(theta)>40 then
     message=theta>0 and "Turn right" or "Turn left"
    end
   end
