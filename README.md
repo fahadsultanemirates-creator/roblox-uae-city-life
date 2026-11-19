@@ -161,3 +161,16 @@ Additionally, v5.3 introduces **Al Wasl Community Park** between the existing Du
 **Fix:** the v5.3 JOBS client crashed on line 34 because it assigned a `Color3` to `TextColor` (which expects `BrickColor`). The correct property is `TextColor3`. The camera client now positions zoom controls relative to the center-right of the **current viewport**, not fixed vertical pixels that may disappear below short Studio play panes. It also uses both high-priority key binding and fallback key events for **I = zoom in, O = zoom out**; mouse **right-drag = look around**; visible **I+ / O−** controls offer an alternative.
 
 This hotfix changes **only client scripts**. It **does not** claim to fix all other possible Studio script errors or magically improve 3D asset realism. If right-side zoom controls remain absent after Play, check whether `StarterPlayer > StarterPlayerScripts > UAE_V53_Camera` is present and whether Output shows `[UAE v5.3.1] Camera client started`. If not, send the Output error/screenshot to debug installation or focus. Source checked but **not yet Studio Play-tested**.
+
+
+## v5.4 — Dubai City Atlas, GPS, Missions & City Expansion
+
+**[Install the v5.4 all-in-one patch](build/Patch_UAE_City_Life_v5_4_DubaiCityAtlasMegaExpansion.luau)** — run only in Roblox Studio **Edit mode**, on your **saved working v5.3/5.3.1** game. Back up first. Click GitHub **Raw**, copy the whole script, replace the contents of Studio **Command Bar**, click its small **Run** button, verify `UAE CITY LIFE v5.4 INSTALLED` in Output, then **save as a new** `Roblox_UAE_City_Life_v5_4.rbxl` and press Play. New server-generated world districts appear in **Play** mode.
+
+**[Full v5.4 guide, location list, controls and Studio test checklist](docs/PHASE5_4_DUBAI_ATLAS_MEGA_EXPANSION.md)**
+
+The upgrade adds a **32-point searchable in-game Dubai city atlas** (tap the small circular map or press **M**), category filters for services, shopping, transport and landmarks, a moving circular mini-radar, selectable GPS markers and direction/distance indicators, and a destination beacon visible in the 3D world. The map is a schematic of **our game coordinates**, not Google Maps or an accurate real-world street map.
+
+Additional scenery: Western Dubai community police/Civil Defence stations, gardens, street furniture, decorative service cars, airport arrivals and taxi stands, Dubai Marina promenade and Jumeirah Beach Walk, helicopter viewing point, more road signs, palms and lighting. Ten new **server-checked non-combat roleplay missions** include police, Civil Defence, ambulance, transport, tourism, healthcare, community service and delivery checkpoint routes; points are **temporary per server session**. Previously built missions and jobs are retained.
+
+**Camera:** I (zoom in) and O (zoom out) are attempted with priority bindings, fallback key events and polling, but Roblox has an ongoing engine input conflict in some Studio versions. **= zooms in and - zooms out** as keyboard fallbacks; the on-screen I+ and O− buttons remain. Right-click dragging rotates the camera. The game is not yet Play-tested or published; successful GitHub upload is not proof of working Roblox gameplay. Graphics remain improved **stylized procedural Roblox Parts**, not ready-made premium 3D art.
