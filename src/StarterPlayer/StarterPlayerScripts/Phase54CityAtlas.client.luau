@@ -210,6 +210,31 @@ for i=1,#roads do
   UDim2.fromOffset(10,2),C.road,54)
  roadFrames[i].AnchorPoint=Vector2.new(0,.5)
 end
+-- Radar road fragments are clipped to a circular 45 px radius.
+local localRoads={}
+for i=1,#roads do
+ local segment=frame(radar,"NearbyRoad"..i,UDim2.fromOffset(0,0),
+  UDim2.fromOffset(2,2),C.road,21)
+ segment.BackgroundTransparency=.15
+ segment.AnchorPoint=Vector2.new(0,.5)
+ segment.Visible=false
+ localRoads[i]=segment
+end
+local function clipCircle(a,b)
+ local delta=b-a
+ local A=delta:Dot(delta)
+ if A<.001 then return nil end
+ local B=2*a:Dot(delta)
+ local Cc=a:Dot(a)-45*45
+ local discr=B*B-4*A*Cc
+ if discr<0 then return nil end
+ local t1=(-B-math.sqrt(discr))/(2*A)
+ local t2=(-B+math.sqrt(discr))/(2*A)
+ local low=math.max(0,math.min(t1,t2))
+ local high=math.min(1,math.max(t1,t2))
+ if low>=high then return nil end
+ return a+delta*low,a+delta*high
+end
 local pinWidgets={}
 for _,loc in ipairs(all) do
  local pin=button(map,"Pin_"..loc.id,"●",UDim2.fromOffset(0,0),
@@ -485,6 +510,18 @@ local function updateRadarAndText(root)
   return
  end
  local pt=root.Position
+ -- Roads scroll past the player as the avatar/vehicle travels.
+ local radarScale=9.5 -- studs per map pixel
+ for i,r in ipairs(roads) do
+  local a=Vector2.new((r[1]-pt.X)/radarScale,(r[2]-pt.Z)/radarScale)
+  local b=Vector2.new((r[3]-pt.X)/radarScale,(r[4]-pt.Z)/radarScale)
+  local nearA,nearB=clipCircle(a,b)
+  if nearA and nearB then
+   paintLine(localRoads[i],nearA+Vector2.new(50,50),nearB+Vector2.new(50,50),2)
+  else
+   localRoads[i].Visible=false
+  end
+ end
  if target then
   local dv=Vector2.new(target.position.X-pt.X,target.position.Z-pt.Z)
   local d=dv.Magnitude
