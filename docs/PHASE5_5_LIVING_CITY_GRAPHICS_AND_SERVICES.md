@@ -47,13 +47,13 @@ These are working **roleplay systems with server-checked proximity, sequence val
 ## Interface
 - Existing **M** full map / radar, **K** missions, **B** city menu, earlier JOBS and camera controls are retained.
 - v5.5 map catalogue grows from **32 to 38 locations**, including the actual new service interiors and accident scene. Search **Hospital Reception**, **Al Wasl Hotel**, **Airport Passenger Check-in**, **Police Reception**, **Civil Defence** or **Accident**.
-- Press **L** or click **LIFE** below the Dubai clock to see service instructions.
+- Press **L** or click **LIFE** below the Dubai clock to see service instructions and five **FAST TRAVEL** buttons (Hospital, Hotel, Airport, Police, Accident). Fast travel positions are validated on the server, and place the avatar near each service entrance.
 - After a service interaction, a small banner gives the result. When appropriate, a right-side service GPS box gives distance to the next area.
 
 ## Suggested 10-minute playtest
 - [ ] Confirm `UAE CITY LIFE v5.5 INSTALLED` in Edit-mode Output.
 - [ ] After Play, confirm `[UAE v5.5] 5 enterable service annexes`, `Interactive city services started`, and `higher-detail E11 lane traffic` messages.
-- [ ] Open MAP (M), search `hospital reception`, navigate there. Approach a reception counter and press E to check in, then E at treatment.
+- [ ] Open LIFE (L), use a FAST TRAVEL button to visit a service entrance.\n- [ ] Open MAP (M), search `hospital reception`, navigate there. Approach a reception counter and press E to check in, then E at treatment.
 - [ ] Visit Al Wasl Hotel; check in and try the guest-room rest interaction.
 - [ ] Visit the airport annex; receive a boarding pass and test the short simulated Marina transfer.
 - [ ] Visit Police or Civil Defence; accept road rescue and follow the service GPS to the accident area.
