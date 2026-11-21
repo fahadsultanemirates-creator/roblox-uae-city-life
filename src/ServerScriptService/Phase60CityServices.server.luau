@@ -117,9 +117,9 @@ local function state(player)
  return s
 end
 -- HOTEL: actual check-in state, furnished accessible suite and checkout.
-local hotel=interior("Al Wasl Hotel Lobby",-550,-922,80,66,C.gold,
+local hotel=interior("Al Wasl Hotel Lobby",-550,-890,80,66,C.gold,
  "DUBAI HOTEL | فندق دبي")
-register(hotel,"Hotel Front Desk","Check in",CFrame.new(-550,4,-910),function(player)
+register(hotel,"Hotel Front Desk","Check in",CFrame.new(-550,4,-878),function(player)
  local s=state(player)
  if s.hotel==0 then
   s.hotel=1
@@ -128,7 +128,7 @@ register(hotel,"Hotel Front Desk","Check in",CFrame.new(-550,4,-910),function(pl
   notify(player,"HOTEL: You already have Room 101.")
  end
 end)
-register(hotel,"Hotel Guest Lift","Go to Room 101",CFrame.new(-580,4,-923),function(player)
+register(hotel,"Hotel Guest Lift","Go to Room 101",CFrame.new(-580,4,-891),function(player)
  if state(player).hotel==0 then notify(player,"Check in first at reception.") return end
  local ch=player.Character
  if ch then ch:PivotTo(CFrame.new(-550,5,-835)) end
@@ -150,7 +150,7 @@ register(room,"Room checkout desk","Check out",CFrame.new(-533,4,-835),function(
  s.hotel=0
  points(player,15)
  local ch=player.Character
- if ch then ch:PivotTo(CFrame.new(-550,5,-946)) end
+ if ch then ch:PivotTo(CFrame.new(-550,5,-916)) end
  notify(player,"HOTEL: Checked out. +15 CityPoints.")
 end)
 -- HOSPITAL: a sequence, not merely a decorative Medical Centre.
@@ -183,25 +183,25 @@ for _,x in ipairs({-255,-218}) do
   CFrame.new(x+4,7,-1067),C.navy,Enum.Material.Metal,false)
 end
 -- AIRPORT: ticket, bag check, security, boarding; gate unlocks flight state.
-local airport=interior("Dubai International Terminal",-1020,-969,107,86,C.navy,
+local airport=interior("Dubai International Terminal",-1020,-925,107,86,C.navy,
  "DXB INTERNATIONAL | مطار دبي")
-register(airport,"Flight Ticket Counter","Book flight",CFrame.new(-1054,4,-964),function(player)
+register(airport,"Flight Ticket Counter","Book flight",CFrame.new(-1054,4,-920),function(player)
  state(player).airport=1
  notify(player,"DXB: Ticket booked. Take your bag to check-in.")
 end)
-register(airport,"Emirates Baggage Drop","Check in luggage",CFrame.new(-1033,4,-963),function(player)
+register(airport,"Emirates Baggage Drop","Check in luggage",CFrame.new(-1033,4,-919),function(player)
  local s=state(player)
  if s.airport~=1 then notify(player,"Book a flight ticket first.") return end
  s.airport=2
  notify(player,"DXB: Baggage checked. Continue through security.")
 end)
-register(airport,"Airport Security Gate","Pass security",CFrame.new(-1006,4,-963),function(player)
+register(airport,"Airport Security Gate","Pass security",CFrame.new(-1006,4,-919),function(player)
  local s=state(player)
  if s.airport~=2 then notify(player,"Check in your baggage first.") return end
  s.airport=3
  notify(player,"DXB: Security passed. Proceed to boarding.")
 end)
-register(airport,"Gate A1 Boarding","Board aircraft",CFrame.new(-985,4,-963),function(player)
+register(airport,"Gate A1 Boarding","Board aircraft",CFrame.new(-985,4,-919),function(player)
  local s=state(player)
  if s.airport~=3 then notify(player,"Finish ticket, baggage and security first.") return end
  s.airport=0
@@ -211,7 +211,7 @@ register(airport,"Gate A1 Boarding","Board aircraft",CFrame.new(-985,4,-963),fun
 end)
 for i=1,6 do
  part(airport,"Airport check-in queue rail",Vector3.new(1.3,3.5,11),
-  CFrame.new(-1065+i*10,2.7,-983),C.metal,Enum.Material.Metal,false)
+  CFrame.new(-1065+i*10,2.7,-939),C.metal,Enum.Material.Metal,false)
 end
 -- Police/Civil Defence are accessible office wings beside the earlier stations.
 local police=interior("Dubai Police Operations",-1135,-480,74,65,C.navy,
