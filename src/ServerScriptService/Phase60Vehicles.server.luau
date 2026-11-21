@@ -65,10 +65,10 @@ local function sign(parent,title,cf,w,h,face,tint)
  t.TextWrapped=true;t.TextColor3=C.white;t.Text=title;t.Parent=s
  return p
 end
-local function make(model,kind)
+local function make(model,kind,allowStatic)
  if active[model] or model:FindFirstChild("UAE60_HighDetailSkin") then return end
  local seat=model:FindFirstChildWhichIsA("VehicleSeat",true)
- if not seat then return end
+ if not seat and not allowStatic then return end
  -- Some legacy emergency vehicles have no PrimaryPart. Preserve their original pivot.
  if not model.PrimaryPart then
   local originalPivot=model:GetPivot()
@@ -205,6 +205,30 @@ local function tryModel(obj)
  end
 end
 for _,obj in ipairs(world:GetDescendants()) do tryModel(obj) end
+-- Several v5.4 police / fire display cars have no seats; repaint them too.
+for _,folderName in ipairs({"CommunityServiceFleet"}) do
+ local fleet=world:FindFirstChild(folderName,true)
+ if fleet then
+  for _,model in ipairs(fleet:GetChildren()) do
+   if model:IsA("Model") then
+    local kind=subtype(model)
+    if kind then
+     local ok,err=pcall(make,model,kind,true)
+     if not ok then warn("[UAE60] display vehicle skin failed:",err) end
+    end
+   end
+  end
+ end
+end
+-- Upgrade the old stationary buses when they are Models and not already styled.
+local upgradedBuses=0
+for _,model in ipairs(world:GetDescendants()) do
+ if model:IsA("Model") and upgradedBuses<8 and
+   string.find(string.lower(model.Name),"bus",1,true) and not active[model] then
+  local ok=pcall(make,model,"Bus",true)
+  if ok then upgradedBuses=upgradedBuses+1 end
+ end
+end
 world.DescendantAdded:Connect(function(obj)
  if obj:IsA("VehicleSeat") then task.delay(.22,tryModel,obj) end
 end)
