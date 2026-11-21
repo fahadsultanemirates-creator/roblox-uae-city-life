@@ -224,7 +224,7 @@ end
 local upgradedBuses=0
 for _,model in ipairs(world:GetDescendants()) do
  if model:IsA("Model") and upgradedBuses<8 and
-   string.find(string.lower(model.Name),"bus",1,true) and not active[model] then
+   string.find(string.lower(model.Name),"%f[%a]bus%f[%A]") and not active[model] then
   local ok=pcall(make,model,"Bus",true)
   if ok then upgradedBuses=upgradedBuses+1 end
  end
