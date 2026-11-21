@@ -118,7 +118,7 @@ local function create(name,kind,pos)
  local seat=Instance.new("VehicleSeat")
  seat.Name="PilotSeat"
  seat.Size=Vector3.new(3,1,3)
- seat.CFrame=CFrame.new(0,7,-10)
+ seat.CFrame=kind=="Plane" and CFrame.new(0,9,-22) or CFrame.new(0,7,-9)
  seat.Anchored=true
  seat.Transparency=1
  seat.CanCollide=false
