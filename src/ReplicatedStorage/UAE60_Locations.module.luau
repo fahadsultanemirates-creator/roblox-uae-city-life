@@ -40,7 +40,7 @@ local destinations={
  {id="POLICE6",name="Dubai Police Operations Office",category="Services",position=Vector3.new(-1135,5,-480),description="Interactive police duty and incident reporting"},
  {id="FIRE6",name="Civil Defence Training Centre",category="Services",position=Vector3.new(-1135,5,-630),description="Safety briefing equipment check and dispatch"},
  {id="REPAIR6",name="City Vehicle Repair Workshop",category="Services",position=Vector3.new(-340,5,-1010),description="Repair car collision damage"},
- {id="FLIGHT6",name="Pilotable Passenger Jet",category="Transport",position=Vector3.new(-1280,5,-1350),description="Airliner flight training plane W S A D R F"},
+ {id="FLIGHT6",name="Pilotable Passenger Jet",category="Transport",position=Vector3.new(-1280,5,-1060),description="Airliner flight training plane W S A D R F"},
  {id="HELI6",name="Pilotable Rescue Helicopter",category="Transport",position=Vector3.new(-1050,5,-790),description="Helicopter flight experience W S A D R F"},
 }
 local byId={}
