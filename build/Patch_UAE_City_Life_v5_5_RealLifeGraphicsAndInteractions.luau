@@ -26,7 +26,8 @@ local visuals=Instance.new("Folder")
 visuals.Name="GraphicsAndStreets"
 visuals.Parent=root
 local function rgb(r,g,b) return Color3.fromRGB(r,g,b) end
-Lighting.Technology=Enum.Technology.Future
+-- Lighting.Technology may be protected in some Roblox runtimes.
+pcall(function() Lighting.Technology=Enum.Technology.Future end)
 Lighting.GlobalShadows=true
 Lighting.ShadowSoftness=.42
 Lighting.EnvironmentDiffuseScale=.65
