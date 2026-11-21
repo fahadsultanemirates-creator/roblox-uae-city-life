@@ -34,9 +34,9 @@ local destinations={
  {id="TAXI",name="Residential Taxi Stand",category="Transport",position=Vector3.new(0,5,-746),description="Personal vehicle garage area"},
  {id="HELIPAD",name="Helicopter Viewing Deck",category="Leisure",position=Vector3.new(-1010,5,-780),description="Helicopter sightseeing viewpoint"},
 
- {id="HOTEL6",name="Dubai Hotel Check-in Lobby",category="Services",position=Vector3.new(-550,5,-922),description="Working hotel reception, guest room booking and checkout"},
+ {id="HOTEL6",name="Dubai Hotel Check-in Lobby",category="Services",position=Vector3.new(-550,5,-890),description="Working hotel reception, guest room booking and checkout"},
  {id="HOSP6",name="Dubai Hospital Patient Entrance",category="Services",position=Vector3.new(-235,5,-1095),description="Interactive hospital registration examination and pharmacy"},
- {id="DXB6",name="DXB Airport Check-in Terminal",category="Transport",position=Vector3.new(-1020,5,-969),description="Working airport ticket baggage security and boarding"},
+ {id="DXB6",name="DXB Airport Check-in Terminal",category="Transport",position=Vector3.new(-1020,5,-925),description="Working airport ticket baggage security and boarding"},
  {id="POLICE6",name="Dubai Police Operations Office",category="Services",position=Vector3.new(-1135,5,-480),description="Interactive police duty and incident reporting"},
  {id="FIRE6",name="Civil Defence Training Centre",category="Services",position=Vector3.new(-1135,5,-630),description="Safety briefing equipment check and dispatch"},
  {id="REPAIR6",name="City Vehicle Repair Workshop",category="Services",position=Vector3.new(-340,5,-1010),description="Repair car collision damage"},
