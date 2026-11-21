@@ -1,6 +1,6 @@
 # UAE City Life — Version 6.0 One Big Rebuild
 
-**Status 21 November 2026:** This is one consolidated 61 KB Luau installer, delivered on GitHub and checked for source consistency. It has **not been executed in your Roblox Studio**, has **not been gameplay-validated**, and has **not been published**. It is a substantial next prototype, not a finished international-quality production game.
+**Status 21 November 2026:** This is one consolidated Luau installer (approximately 67 KB), delivered on GitHub and checked for source consistency. It has **not been executed in your Roblox Studio**, has **not been gameplay-validated**, and has **not been published**. It is a substantial next prototype, not a finished international-quality production game.
 
 ## Do this once — safely
 
@@ -15,7 +15,7 @@
 
 The installer preserves v4–v5.4 city districts and keeps old v5.5 scripts as **disabled backups** to avoid duplicate services. It replaces their 5.5 graphics, citizen, activities and crash loop with Phase 6 systems. Your 5.4 map, camera, drivable car controls, City travel and older missions remain in the saved place.
 
-A near-identical v5.5 build using `Phase55_ProductionPass` instead of `Phase55_RealLife` is also accepted where its installed version and v5.4 catalogue can be found.
+The v5.5 build you used creates `Phase55_LivingCity` and scripts `UAE55_WorldAndInteriors`, `UAE55_InteractiveCity`, `UAE55_TrafficAndVehicles`, `UAE55_R15Pedestrians` and `UAE55_CityLifeHUD`. Phase 6 recognizes this layout and disables these outdated runtime scripts (without deleting them), specifically to avoid the malformed wheel models and duplicate service menus. The alternative earlier `Phase55_RealLife` and `Phase55_ProductionPass` layouts are also accepted.
 
 ## What's built
 
@@ -24,6 +24,7 @@ A near-identical v5.5 build using `Phase55_ProductionPass` instead of `Phase55_R
 - Repairs visible geometry: upright circular cylinders on horizontal axles, hubcaps, body panels, side windows, roof lights, grille, bumpers and basic bilingual vehicle markings. Includes static police/fire fleet and selected buses.
 - Existing seat interaction and previous `UAE_Driving` system remain intact. New tyres are **decorative**, not physically driven suspension; collision handling is an approximation based on travel distance and forward raycasts.
 - A new repair workshop is near **x=-320, z=-1030**. Use **E** at the garage terminal with an appropriate vehicle parked nearby. Cosmetic bumper colour changes after a detected crash.
+- Adds **six road-following, non-colliding E11 civilian traffic cars**, or four with `LOW_PERFORMANCE=true`. They slow down for nearby players and other scripted traffic rather than passing straight through each other.
 - Cars are visibly better-proportioned *procedural Roblox Parts*, **not** imported real-world production car meshes or fully realistic car physics.
 
 ### 2. Pilotable plane and helicopter
