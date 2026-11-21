@@ -7,9 +7,9 @@ local folder=Instance.new("Folder")
 folder.Name="WalkingHumanCitizens"
 folder.Parent=root
 local stations={
- {"Hotel Receptionist",{-545,-910},{-550,-906},{-559,-907}},
+ {"Hotel Receptionist",{-545,-880},{-550,-877},{-559,-875}},
  {"Hospital Nurse",{-225,-1081},{-222,-1077},{-233,-1074}},
- {"Airport Staff",{-1020,-957},{-1006,-954},{-1010,-971}},
+ {"Airport Staff",{-1020,-910},{-1006,-907},{-1010,-922}},
  {"Airport Traveller",{-1065,-1110},{-1052,-1100},{-1037,-1110}},
  {"Dubai Police Officer",{-1120,-477},{-1135,-470},{-1146,-486}},
  {"Firefighter",{-1130,-635},{-1150,-644},{-1115,-615}},
@@ -22,7 +22,7 @@ local stations={
  {"Marina Visitor",{1050,-1325},{1063,-1275},{1042,-1230}},
  {"Beach Tourist",{1000,-720},{1040,-717},{1100,-700}},
  {"Community Gardener",{-942,-880},{-905,-900},{-965,-916}},
- {"Hotel Guest",{-580,-915},{-566,-905},{-545,-940}},
+ {"Hotel Guest",{-580,-889},{-566,-876},{-545,-910}},
 }
 local clothingColors={
  Color3.fromRGB(59,91,115),Color3.fromRGB(226,232,230),
