@@ -78,9 +78,9 @@ local destinations={
  {id="TAXI",name="Residential Taxi Stand",category="Transport",position=Vector3.new(0,5,-746),description="Personal vehicle garage area"},
  {id="HELIPAD",name="Helicopter Viewing Deck",category="Leisure",position=Vector3.new(-1010,5,-780),description="Helicopter sightseeing viewpoint"},
 
- {id="HOTEL6",name="Dubai Hotel Check-in Lobby",category="Services",position=Vector3.new(-550,5,-922),description="Working hotel reception, guest room booking and checkout"},
+ {id="HOTEL6",name="Dubai Hotel Check-in Lobby",category="Services",position=Vector3.new(-550,5,-890),description="Working hotel reception, guest room booking and checkout"},
  {id="HOSP6",name="Dubai Hospital Patient Entrance",category="Services",position=Vector3.new(-235,5,-1095),description="Interactive hospital registration examination and pharmacy"},
- {id="DXB6",name="DXB Airport Check-in Terminal",category="Transport",position=Vector3.new(-1020,5,-969),description="Working airport ticket baggage security and boarding"},
+ {id="DXB6",name="DXB Airport Check-in Terminal",category="Transport",position=Vector3.new(-1020,5,-925),description="Working airport ticket baggage security and boarding"},
  {id="POLICE6",name="Dubai Police Operations Office",category="Services",position=Vector3.new(-1135,5,-480),description="Interactive police duty and incident reporting"},
  {id="FIRE6",name="Civil Defence Training Centre",category="Services",position=Vector3.new(-1135,5,-630),description="Safety briefing equipment check and dispatch"},
  {id="REPAIR6",name="City Vehicle Repair Workshop",category="Services",position=Vector3.new(-340,5,-1010),description="Repair car collision damage"},
@@ -219,9 +219,9 @@ local function state(player)
  return s
 end
 -- HOTEL: actual check-in state, furnished accessible suite and checkout.
-local hotel=interior("Al Wasl Hotel Lobby",-550,-922,80,66,C.gold,
+local hotel=interior("Al Wasl Hotel Lobby",-550,-890,80,66,C.gold,
  "DUBAI HOTEL | فندق دبي")
-register(hotel,"Hotel Front Desk","Check in",CFrame.new(-550,4,-910),function(player)
+register(hotel,"Hotel Front Desk","Check in",CFrame.new(-550,4,-878),function(player)
  local s=state(player)
  if s.hotel==0 then
   s.hotel=1
@@ -230,7 +230,7 @@ register(hotel,"Hotel Front Desk","Check in",CFrame.new(-550,4,-910),function(pl
   notify(player,"HOTEL: You already have Room 101.")
  end
 end)
-register(hotel,"Hotel Guest Lift","Go to Room 101",CFrame.new(-580,4,-923),function(player)
+register(hotel,"Hotel Guest Lift","Go to Room 101",CFrame.new(-580,4,-891),function(player)
  if state(player).hotel==0 then notify(player,"Check in first at reception.") return end
  local ch=player.Character
  if ch then ch:PivotTo(CFrame.new(-550,5,-835)) end
@@ -252,7 +252,7 @@ register(room,"Room checkout desk","Check out",CFrame.new(-533,4,-835),function(
  s.hotel=0
  points(player,15)
  local ch=player.Character
- if ch then ch:PivotTo(CFrame.new(-550,5,-946)) end
+ if ch then ch:PivotTo(CFrame.new(-550,5,-916)) end
  notify(player,"HOTEL: Checked out. +15 CityPoints.")
 end)
 -- HOSPITAL: a sequence, not merely a decorative Medical Centre.
@@ -285,25 +285,25 @@ for _,x in ipairs({-255,-218}) do
   CFrame.new(x+4,7,-1067),C.navy,Enum.Material.Metal,false)
 end
 -- AIRPORT: ticket, bag check, security, boarding; gate unlocks flight state.
-local airport=interior("Dubai International Terminal",-1020,-969,107,86,C.navy,
+local airport=interior("Dubai International Terminal",-1020,-925,107,86,C.navy,
  "DXB INTERNATIONAL | مطار دبي")
-register(airport,"Flight Ticket Counter","Book flight",CFrame.new(-1054,4,-964),function(player)
+register(airport,"Flight Ticket Counter","Book flight",CFrame.new(-1054,4,-920),function(player)
  state(player).airport=1
  notify(player,"DXB: Ticket booked. Take your bag to check-in.")
 end)
-register(airport,"Emirates Baggage Drop","Check in luggage",CFrame.new(-1033,4,-963),function(player)
+register(airport,"Emirates Baggage Drop","Check in luggage",CFrame.new(-1033,4,-919),function(player)
  local s=state(player)
  if s.airport~=1 then notify(player,"Book a flight ticket first.") return end
  s.airport=2
  notify(player,"DXB: Baggage checked. Continue through security.")
 end)
-register(airport,"Airport Security Gate","Pass security",CFrame.new(-1006,4,-963),function(player)
+register(airport,"Airport Security Gate","Pass security",CFrame.new(-1006,4,-919),function(player)
  local s=state(player)
  if s.airport~=2 then notify(player,"Check in your baggage first.") return end
  s.airport=3
  notify(player,"DXB: Security passed. Proceed to boarding.")
 end)
-register(airport,"Gate A1 Boarding","Board aircraft",CFrame.new(-985,4,-963),function(player)
+register(airport,"Gate A1 Boarding","Board aircraft",CFrame.new(-985,4,-919),function(player)
  local s=state(player)
  if s.airport~=3 then notify(player,"Finish ticket, baggage and security first.") return end
  s.airport=0
@@ -313,7 +313,7 @@ register(airport,"Gate A1 Boarding","Board aircraft",CFrame.new(-985,4,-963),fun
 end)
 for i=1,6 do
  part(airport,"Airport check-in queue rail",Vector3.new(1.3,3.5,11),
-  CFrame.new(-1065+i*10,2.7,-983),C.metal,Enum.Material.Metal,false)
+  CFrame.new(-1065+i*10,2.7,-939),C.metal,Enum.Material.Metal,false)
 end
 -- Police/Civil Defence are accessible office wings beside the earlier stations.
 local police=interior("Dubai Police Operations",-1135,-480,74,65,C.navy,
@@ -975,9 +975,9 @@ local folder=Instance.new("Folder")
 folder.Name="WalkingHumanCitizens"
 folder.Parent=root
 local stations={
- {"Hotel Receptionist",{-545,-910},{-550,-906},{-559,-907}},
+ {"Hotel Receptionist",{-545,-880},{-550,-877},{-559,-875}},
  {"Hospital Nurse",{-225,-1081},{-222,-1077},{-233,-1074}},
- {"Airport Staff",{-1020,-957},{-1006,-954},{-1010,-971}},
+ {"Airport Staff",{-1020,-910},{-1006,-907},{-1010,-922}},
  {"Airport Traveller",{-1065,-1110},{-1052,-1100},{-1037,-1110}},
  {"Dubai Police Officer",{-1120,-477},{-1135,-470},{-1146,-486}},
  {"Firefighter",{-1130,-635},{-1150,-644},{-1115,-615}},
@@ -990,7 +990,7 @@ local stations={
  {"Marina Visitor",{1050,-1325},{1063,-1275},{1042,-1230}},
  {"Beach Tourist",{1000,-720},{1040,-717},{1100,-700}},
  {"Community Gardener",{-942,-880},{-905,-900},{-965,-916}},
- {"Hotel Guest",{-580,-915},{-566,-905},{-545,-940}},
+ {"Hotel Guest",{-580,-889},{-566,-876},{-545,-910}},
 }
 local clothingColors={
  Color3.fromRGB(59,91,115),Color3.fromRGB(226,232,230),
@@ -1368,12 +1368,12 @@ local quests={
   stops={{"Civil Defence Training",-1135,-630},
    {"E11 Road Safety Incident",0,-1200},{"Civil Defence Return",-1135,-630}}},
  {id="AIR",title="Pilot Training & City Flyover",reward=230,
-  stops={{"DXB Airport Terminal",-1020,-969},
+  stops={{"DXB Airport Terminal",-1020,-925},
    {"Aircraft Runway",-1280,-1350},{"Museum Flyover",315,-1180},
    {"Dubai Marina",1060,-1285}}},
  {id="HOTEL",title="International Tourist Transfer",reward=170,
   stops={{"DXB Arrivals",-970,-1120},
-   {"Hotel Guest Check-in",-550,-922},
+   {"Hotel Guest Check-in",-550,-890},
    {"Burj Khalifa Downtown",-84,-392}}},
  {id="COAST",title="Marina Search & Safety",reward=170,
   stops={{"Dubai Marina",1060,-1285},
