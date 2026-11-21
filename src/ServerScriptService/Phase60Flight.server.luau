@@ -152,7 +152,7 @@ local function create(name,kind,pos)
  end)
  return m
 end
-local plane=create("UAE City Air Passenger Jet","Plane",Vector3.new(-1280,1.1,-1350))
+local plane=create("UAE City Air Passenger Jet","Plane",Vector3.new(-1280,1.1,-1060))
 local heli=create("Dubai City Rescue Helicopter","Helicopter",Vector3.new(-1050,3,-790))
 -- Validate piloting on every input packet, never trust a client craft reference.
 control.OnServerEvent:Connect(function(player,input)
