@@ -33,7 +33,7 @@ A large pasted code block may be less responsive in Studio. Once you see the **i
 - Prompts and progression state are checked on the server; player must physically be close to the counter. A nearby **CITY TRANSIT** feature helps reach selected entrance locations in this large **fictional in-game** layout.
 
 ### Pilotable aircraft
-- A stylized airliner can be piloted from the airport runway near x=-1280,z=-1350.
+- A stylized airliner can be piloted from the airport runway near x=-1280,z=-1060.
 - A rescue helicopter is at the western helipad near x=-1050,z=-790.
 - Approach the cockpit, hold **E** when the pilot prompt appears.
 - **W / S** = forward acceleration/deceleration; **A / D** = turn; **R** = ascend; **F** = descend; **Space** = exit seat.
