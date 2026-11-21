@@ -90,6 +90,18 @@ for i,location in ipairs(stations) do
    local hrp=npc:FindFirstChild("HumanoidRootPart")
    if not hum or not hrp then npc:Destroy() return end
    hum.WalkSpeed=i%5==0 and 7 or 9
+   -- Roblox standard R15 walk clip: optional asset; NPC still moves if inaccessible.
+   local anim=Instance.new("Animation")
+   anim.AnimationId="rbxassetid://507777826"
+   local animator=hum:FindFirstChildOfClass("Animator") or Instance.new("Animator",hum)
+   local okAnimation,track=pcall(function()
+    return animator:LoadAnimation(anim)
+   end)
+   if okAnimation and track then
+    track.Priority=Enum.AnimationPriority.Movement
+    track.Looped=true
+    track:Play(.15,1,.85)
+   end
    hum.JumpPower=0
    hum.AutoRotate=true
    hum.BreakJointsOnDeath=false
