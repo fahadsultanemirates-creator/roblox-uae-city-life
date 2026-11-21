@@ -68,7 +68,18 @@ end
 local function make(model,kind)
  if active[model] or model:FindFirstChild("UAE60_HighDetailSkin") then return end
  local seat=model:FindFirstChildWhichIsA("VehicleSeat",true)
- if not seat or not model.PrimaryPart then return end
+ if not seat then return end
+ -- Some legacy emergency vehicles have no PrimaryPart. Preserve their original pivot.
+ if not model.PrimaryPart then
+  local originalPivot=model:GetPivot()
+  local stub=Instance.new("Part")
+  stub.Name="UAE60PreservedVehiclePivot"
+  stub.Size=Vector3.new(.2,.2,.2)
+  stub.CFrame=originalPivot
+  stub.Anchored=true;stub.CanCollide=false
+  stub.Transparency=1;stub.Parent=model
+  model.PrimaryPart=stub
+ end
  local w,len,h=sizeFor(kind)
  local pivot=model:GetPivot()
  local outer=Instance.new("Model");outer.Name="UAE60_HighDetailSkin";outer.Parent=model
@@ -195,7 +206,7 @@ local function tryModel(obj)
 end
 for _,obj in ipairs(world:GetDescendants()) do tryModel(obj) end
 world.DescendantAdded:Connect(function(obj)
- if obj:IsA("VehicleSeat") then task.defer(tryModel,obj) end
+ if obj:IsA("VehicleSeat") then task.delay(.22,tryModel,obj) end
 end)
 -- Anchored legacy cars use PivotTo, so measure actual displacement instead of physics velocity.
 local elapsed=0
@@ -222,10 +233,50 @@ RunService.Heartbeat:Connect(function(dt)
      lastImpact[model]=now
      local damage=math.clamp(math.floor(speed*.27),5,24)
      model:SetAttribute("UAE60Damage",math.clamp((model:GetAttribute("UAE60Damage") or 0)+damage,0,100))
+     local bumper=state.skin:FindFirstChild("Front bumper")
+     if bumper then bumper.Color=C.red:Lerp(C.black,math.min(1,(model:GetAttribute("UAE60Damage") or 0)/100)) end
      notices:FireClient(player,"Vehicle impact detected. Damage +"..damage.." | Visit the repair garage.")
     end
    end
   end
  end
 end)
-print("[UAE60] Vehicle cosmetics active. Original driving and seating preserved.")
+-- Collision damage service garage: the older v5.5 crash script is disabled.
+local garage=Instance.new("Folder")
+garage.Name="VehicleRepairWorkshop";garage.Parent=root
+local pad=part(garage,"Part","Garage repair service bay",Vector3.new(39,1,35),
+ CFrame.new(-320,1.6,-1030),C.steel,Enum.Material.Concrete,0)
+pad.CanCollide=true
+local desk=part(garage,"Part","Workshop service terminal",Vector3.new(5,7,2),
+ CFrame.new(-325,5,-1042),C.green,Enum.Material.Metal,0)
+desk.CanCollide=true
+local prompt=Instance.new("ProximityPrompt")
+prompt.ActionText="Repair vehicle"
+prompt.ObjectText="UAE City Auto Service"
+prompt.HoldDuration=1;prompt.MaxActivationDistance=17
+prompt.RequiresLineOfSight=false;prompt.Parent=desk
+prompt.Triggered:Connect(function(pl)
+ local char=pl.Character
+ local hum=char and char:FindFirstChildOfClass("Humanoid")
+ local rootPart=char and char:FindFirstChild("HumanoidRootPart")
+ if not hum or hum.Health<=0 or not rootPart or (rootPart.Position-desk.Position).Magnitude>20 then return end
+ local nearest,best=nil,48
+ for model,state in pairs(active) do
+  if model.Parent and state.skin.Parent then
+   local seat=model:FindFirstChildWhichIsA("VehicleSeat",true)
+   local owner=model:GetAttribute("OwnerUserId")
+   local authorized=not owner or owner==pl.UserId
+   if seat and authorized then
+    local distance=(seat.Position-pad.Position).Magnitude
+    if distance<best then nearest=model;best=distance end
+   end
+  end
+ end
+ if not nearest then notices:FireClient(pl,"Park your vehicle at the repair workshop.") return end
+ nearest:SetAttribute("UAE60Damage",0)
+ local skin=active[nearest] and active[nearest].skin
+ local bumper=skin and skin:FindFirstChild("Front bumper")
+ if bumper then bumper.Color=C.steel end
+ notices:FireClient(pl,"Repair completed. Vehicle damage restored to zero.")
+end)
+print("[UAE60] Vehicle cosmetics, crash sensor and repair workshop installed.")
