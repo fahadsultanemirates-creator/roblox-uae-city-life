@@ -13,7 +13,7 @@ local quests={
    {"E11 Road Safety Incident",0,-1200},{"Civil Defence Return",-1135,-630}}},
  {id="AIR",title="Pilot Training & City Flyover",reward=230,
   stops={{"DXB Airport Terminal",-1020,-925},
-   {"Aircraft Runway",-1280,-1350},{"Museum Flyover",315,-1180},
+   {"Aircraft Runway",-1280,-1060},{"Museum Flyover",315,-1180},
    {"Dubai Marina",1060,-1285}}},
  {id="HOTEL",title="International Tourist Transfer",reward=170,
   stops={{"DXB Arrivals",-970,-1120},
