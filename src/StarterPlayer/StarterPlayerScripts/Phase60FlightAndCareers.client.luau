@@ -180,7 +180,9 @@ for i,key in ipairs(keys) do
  end)
 end
 UIS.InputBegan:Connect(function(input,used)
- if used or UIS:GetFocusedTextBox() then return end
+ -- When seated, Roblox's default movement controls can mark WASD as processed.
+ -- Ignore processed only for pilot keys; still protect focused text boxes.
+ if UIS:GetFocusedTextBox() then return end
  if input.UserInputType==Enum.UserInputType.Keyboard then
   local key=input.KeyCode.Name
   if table.find(keys,key) and pilot() then sendKey(key,true) end
