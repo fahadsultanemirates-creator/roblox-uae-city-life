@@ -208,3 +208,17 @@ This **single source bundle** supersedes the small incremental 5.5 additions wit
 **Compatibility:** The v5.5 scene used in the latest screenshot is `Phase55_LivingCity` with `UAE55_WorldAndInteriors`, `UAE55_InteractiveCity`, `UAE55_TrafficAndVehicles`, `UAE55_R15Pedestrians` and `UAE55_CityLifeHUD`. V6 disables those scripts *without deleting them*, to prevent duplicate interfaces and old broken-tyre traffic. Other earlier v5.5 root names are recognized too. If Studio slows on a Dell laptop, set `LOW_PERFORMANCE=true` near the top of the one installer before pressing Run.
 
 **Limitations:** The aircraft use scripted arcade movement rather than physics-based flight, crashes are approximate raycast checks, traffic is visual/scenic rather than complete AI, building interactions are roleplay steps and the added NPCs are standard Roblox R15 characters. The models are still **procedural Parts**, not custom PBR MeshParts or an international-quality 3D art production. Achieving the final requested visual standard requires custom high-detail licensed/original 3D model, texture and animation work via Roblox Studio Importer. **Only the GitHub source has been created and checked; v6 is not Studio Play-tested or published.** Keep your backup for rollback.
+
+
+## Important corrective update — UAE City Life v6.1
+
+Version 6.0 was reported still having cars pass through buildings, repetitive tower facades and nearly identical vehicle models. The root cause of the car tunnelling is the original **anchored car `PivotTo()` controller**, not the lighting settings.
+
+**[Install v6.1 Collision, Vehicles and Architecture repair](build/Patch_UAE_City_Life_v6_1_CollisionsVehiclesAndArchitecture.luau)**  
+**[Detailed install instructions and Play testing guide](docs/PHASE6_1_COLLISION_AND_VISUAL_REPAIR.md)**
+
+Version 6.1 **replaces** the `UAE_Driving` logic with server-validated `Blockcast` collision checks and `GetPartBoundsInBox` overlap checks before moving emergency and personal cars. W/A/S/D and vehicle prompts are preserved; owner-only personal vehicle entry remains restricted. This improves wall stopping on **collidable** scenery but does **not** transform the cars into real physics-rig chassis. Six distinct background E11 traffic silhouettes stop for players and wall probes. Seven classes of playable cars receive class-specific shells and upright wheel cylinders. Existing Sheikh Zayed Road towers gain six distinct material/color palettes and four architectural facade treatments.
+
+**Install on an existing saved v6.0 project in Studio EDIT mode.** Press STOP, save a separate v6.0 backup, open the patch's GitHub **Raw**, copy the entire code, replace Command Bar text, run, check Output for `UAE CITY LIFE v6.1 INSTALLED`, save as a **new** `UAE_City_Life_v6_1.rbxl`, then Play. Do **not** reinstall v6.0 afterward because that would reintroduce older controllers.
+
+**Important limitation:** v6.1 source is committed and statically inspected but **has not been run or Play-tested in Roblox Studio**. Not a completed open-world simulator: fully realistic cars, pedestrians, unique detailed building interiors and traffic physics require licensed/custom MeshParts, animations, optimizations and repeated Studio tests. If a car still clips through a certain structure, send that spot's screenshot and the Output errors: some scenery may be marked `CanCollide=false` and therefore omitted from physics checks.
