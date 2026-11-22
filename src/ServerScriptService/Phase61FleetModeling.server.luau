@@ -121,8 +121,8 @@ local function style(model)
    end
   end
  else
-  local roofLength=kind=="SUV" or kind=="Police" and l*.57 or l*.46
-  local roofZ=kind=="SUV" or kind=="Police" and .7 or 1.3
+  local roofLength=(kind=="SUV" or kind=="Police") and l*.57 or l*.46
+  local roofZ=(kind=="SUV" or kind=="Police") and .7 or 1.3
   p("Part","Shaped glass passenger cabin",Vector3.new(w-1.15,2.6,roofLength),
    0,7.2,roofZ,C.glass,Enum.Material.Glass,.16)
   p("Part","Painted aerodynamic roof",Vector3.new(w-1.0,.7,roofLength+.55),
