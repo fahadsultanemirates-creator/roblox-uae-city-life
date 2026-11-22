@@ -109,7 +109,7 @@ if storefront then
  for i,shop in ipairs(shops) do
   local tint=colors[(i-1)%#colors+1]
   for _,obj in ipairs(shop:GetDescendants()) do
-   if obj:IsA("BasePart") and (obj.Name:find("Awning") or
+   if obj:IsA("BasePart") and (string.find(obj.Name,"Awning",1,true) or
       obj.Name:find("awning") or obj.Name:find("sign") or
       obj.Name:find("Sign") or obj.Name:find("facade")) then
      obj.Color=tint
