@@ -32,6 +32,9 @@ This patch responds to v6 testing: anchored cars pass through buildings, repetit
 - Older v6 vehicle art controllers are disabled; visuals are generated from the new `UAE61_Fleet` server script. VehicleSeat and movement remain untouched.
 - **6 E11 traffic models:** sedan, taxi, SUV, hatchback, minibus and luxury saloon. They follow defined lanes and use forward obstacle probes; these are **still nonphysical background traffic**, not smart general road AI.
 
+
+**Traffic detail:** When the saved v6 city has LowPerformance enabled, only the first **four** of the six authored civilian traffic cars spawn. The full six appear when performance mode is disabled. This avoids overwhelming lower-end laptops.
+
 ### 3. More varied building colors and silhouettes
 - Existing `SheikhZayedArchitecture` towers use a rotating palette of sandstone, dark metal, white, terracotta, tinted glass and heritage hues.
 - Four skyline designs: vertical Arabian-style ribs/crown, dark office slab floors and spire, residential balconies/rooftop pergola, and vertical colored facade fins.
