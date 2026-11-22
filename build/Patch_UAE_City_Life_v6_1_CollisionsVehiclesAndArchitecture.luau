@@ -82,6 +82,10 @@ local function findVehicle(seat)
  return model
 end
 local function ownedDriver(player,seat)
+ local car=findVehicle(seat)
+ if not car then return false end
+ local owner=car:GetAttribute("OwnerUserId")
+ if typeof(owner)=="number" and owner~=player.UserId then return false end
  local hum=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
  return hum and hum.Health>0 and seat.Occupant==hum
 end
@@ -163,7 +167,10 @@ local function setup(obj)
  if not car or connections[obj] then return end
  local prompt=obj:FindFirstChild("EntryPrompt")
  local cons={}
- if prompt and prompt:IsA("ProximityPrompt") then
+ -- V5.2 privately-owned garage cars already have an owner-only prompt.
+ -- Avoid installing a duplicate open-to-all entry handler.
+ local owner=car:GetAttribute("OwnerUserId")
+ if not owner and prompt and prompt:IsA("ProximityPrompt") then
   cons[#cons+1]=prompt.Triggered:Connect(function(player)
    local hum=player.Character and player.Character:FindFirstChildOfClass("Humanoid")
    local root=player.Character and player.Character:FindFirstChild("HumanoidRootPart")
